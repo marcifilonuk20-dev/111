@@ -371,22 +371,31 @@
 
   /* ========== Init ========== */
   function init() {
-    initTheme();
-    initMobileNav();
-    initScrollProgress();
-    initParticles();
+    try { initTheme(); } catch (e) { console.error(e); }
+    try { initMobileNav(); } catch (e) { console.error(e); }
+    try { initScrollProgress(); } catch (e) { console.error(e); }
+    try { initParticles(); } catch (e) { console.error(e); }
 
     var path = window.location.pathname;
 
     // Homepage or article list
-    if (path === '/' || path.endsWith('index.html') || path.endsWith('/')) {
+    if (path === '/' || path.indexOf('index.html') !== -1 || path.slice(-1) === '/') {
       var featuredGrid = document.querySelector('#featured-grid');
       var articleList = document.querySelector('#article-list');
-      if (featuredGrid) renderFeaturedArticles('#featured-grid');
+      if (featuredGrid) {
+        try {
+          renderFeaturedArticles('#featured-grid');
+        } catch (e) {
+          console.error('renderFeaturedArticles error:', e);
+          featuredGrid.innerHTML = '<p class="empty-state">文章加载失败，请刷新页面重试</p>';
+        }
+      }
       if (articleList && !featuredGrid) {
-        renderArticleList('#article-list');
-        renderCategoryFilters('#category-filters');
-        initSearch();
+        try {
+          renderArticleList('#article-list');
+          renderCategoryFilters('#category-filters');
+          initSearch();
+        } catch (e) { console.error(e); }
       }
     }
 
