@@ -94,14 +94,12 @@
 
   /* ========== Scroll Reveal ========== */
   function initScrollReveal() {
-    var reveals = document.querySelectorAll('.reveal');
-
     function check() {
+      var reveals = document.querySelectorAll('.reveal:not(.visible)');
       for (var i = 0; i < reveals.length; i++) {
         var el = reveals[i];
         var top = el.getBoundingClientRect().top;
-        var windowHeight = window.innerHeight;
-        if (top < windowHeight - 60) {
+        if (top < window.innerHeight - 60) {
           el.classList.add('visible');
         }
       }
@@ -109,6 +107,8 @@
 
     window.addEventListener('scroll', check, { passive: true });
     check();
+    // 延迟再检查一次，确保异步加载的元素也能出现
+    setTimeout(check, 800);
   }
 
   /* ========== Theme Manager ========== */
