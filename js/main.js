@@ -221,14 +221,12 @@
     var container = document.querySelector(containerSelector);
     if (!container) return;
     var data = await fetchArticles();
-    var featured = data.articles
-      .filter(function (a) { return a.featured; })
-      .sort(function (a, b) { return b.date.localeCompare(a.date); })
-      .slice(0, 6);
+    var all = data.articles
+      .sort(function (a, b) { return b.date.localeCompare(a.date); });
 
-    if (!featured.length) { container.innerHTML = '<p class="empty-state">暂无精选文章</p>'; return; }
+    if (!all.length) { container.innerHTML = '<p class="empty-state">暂无文章</p>'; return; }
 
-    featured.forEach(function (article, i) {
+    all.forEach(function (article, i) {
       container.appendChild(createArticleCard(article, i));
     });
   }
