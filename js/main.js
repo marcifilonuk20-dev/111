@@ -4,6 +4,8 @@
 (function () {
   'use strict';
 
+  var scrollRevealCheck = null;
+
   /* ========== Particle Background ========== */
   function initParticles() {
     var canvas = document.getElementById('particles-canvas');
@@ -105,9 +107,9 @@
       }
     }
 
+    scrollRevealCheck = check;
     window.addEventListener('scroll', check, { passive: true });
     check();
-    // 延迟再检查一次，确保异步加载的元素也能出现
     setTimeout(check, 800);
   }
 
@@ -255,6 +257,7 @@
     if (!articles.length) { container.innerHTML = '<div class="empty-state"><p>还没有文章</p></div>'; return; }
     articles.forEach(function (a) { container.appendChild(createArticleListItem(a)); });
     container._articlesData = articles;
+    if (scrollRevealCheck) { setTimeout(scrollRevealCheck, 50); }
   }
 
   /* ========== Category Filters ========== */
@@ -298,6 +301,7 @@
     });
     if (!filtered.length) { container.innerHTML = '<div class="empty-state"><p>没有找到匹配的文章</p></div>'; return; }
     filtered.forEach(function (a) { container.appendChild(createArticleListItem(a)); });
+    if (scrollRevealCheck) { setTimeout(scrollRevealCheck, 50); }
   }
 
   function initSearch() {
