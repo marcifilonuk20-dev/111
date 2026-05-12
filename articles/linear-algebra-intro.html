@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="从向量的几何直观出发，介绍线性代数的基本概念">
-  <title>线性代数入门：向量与矩阵 — 数学笔记</title>
+  <meta name="description" content="系统介绍高等代数的核心内容：多项式、行列式、矩阵、线性空间、线性变换与二次型">
+  <title>高等代数导论 — 数学笔记</title>
   <link rel="stylesheet" href="../css/style.css">
   <script>
     (function () {
@@ -19,15 +19,12 @@
 </head>
 <body>
   <a href="#main-content" class="skip-link">跳转到主内容</a>
-
   <header class="site-header">
     <div class="container">
       <a href="../" class="site-logo">数学笔记</a>
       <button class="nav-toggle" aria-label="菜单">☰</button>
       <nav class="site-nav">
-        <a href="../">首页</a>
-        <a href="./">文章</a>
-        <a href="../about.html">关于</a>
+        <a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a>
       </nav>
       <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
     </div>
@@ -37,123 +34,163 @@
     <div class="container">
       <div class="article-content">
         <article>
-          <h1>线性代数入门：向量与矩阵</h1>
-
+          <h1>高等代数导论</h1>
           <div class="article-meta">
             <time datetime="2026-03-15">2026年3月15日</time>
-            <span class="category-tag">线性代数</span>
+            <span class="category-tag">高等代数</span>
           </div>
-
           <div class="article-body">
-            <h2>引言</h2>
+
+            <h2>引言：从初等代数到结构代数</h2>
             <p>
-              线性代数是现代数学中最基础也最实用的分支之一。从计算机图形学到机器学习，
-              从量子力学到经济学，线性代数的思想无处不在。本文将从最直观的几何视角出发，
-              逐步引入向量、矩阵和线性变换的基本概念。
+              初等代数的核心是解方程。高等代数的核心则是研究<strong>代数结构</strong>——多项式环、矩阵代数、线性空间、线性变换——以及它们之间的内在联系。高等代数（Advanced Algebra）在中国大学数学系的课程体系中，大致对应于西方大学两学期的"Linear Algebra"加上多项式理论和二次型等补充内容。它的目标不仅仅是计算，更是<strong>建立公理化的代数思维</strong>。
+            </p>
+            <p>
+              本文将勾勒高等代数的主要板块及其内在逻辑联系，为后续的深入篇章提供一个全局性的路线图。
             </p>
 
-            <h2>向量：有方向的量</h2>
+            <h2>第一板块：多项式理论</h2>
             <p>
-              在物理中，向量通常被理解为"有大小和方向的量"。在数学中，我们可以将二维向量
-              $\mathbf{v} = (x, y)$ 想象为平面上从原点出发的一个箭头。向量的加法和数乘有着
-              清晰的几何解释：
+              高等代数通常始于一元多项式环 $\mathbb{F}[x]$（$\mathbb{F}$ 是数域）的系统研究。表面上多项式是中学阶段就熟悉的题材，但高等代数的处理方式完全不同——我们关心的是代数结构。
             </p>
             <p>
-              <strong>向量加法</strong>：两个向量 $\mathbf{u} = (u_1, u_2)$ 和
-              $\mathbf{v} = (v_1, v_2)$ 的加法定义为：
-              $$\mathbf{u} + \mathbf{v} = (u_1 + v_1, u_2 + v_2)$$
-              几何上，这对应于将两个向量首尾相接——平行四边形法则。
+              <strong>带余除法与整除：</strong>对于任意 $f, g \in \mathbb{F}[x]$（$g \neq 0$），存在唯一的 $q, r \in \mathbb{F}[x]$ 使得 $f = qg + r$，其中 $\deg r < \deg g$。这条看似平凡的结论是整个多项式理论的基础，它使得 $\mathbb{F}[x]$ 成为一个<strong>欧几里得环</strong>——具有带余除法的整环。
             </p>
             <p>
-              <strong>数乘</strong>：向量 $\mathbf{v}$ 乘以标量 $\lambda$ 定义为：
-              $$\lambda \mathbf{v} = (\lambda v_1, \lambda v_2)$$
-              数乘在几何上拉伸或压缩向量的长度，当 $\lambda$ 为负数时还会反转方向。
-            </p>
-
-            <h2>向量空间</h2>
-            <p>
-              将向量的加法和数乘抽象出来，我们得到<strong>向量空间</strong>的公理化定义。
-              一个集合 $V$ 配上一个加法运算和数乘运算，如果满足八条公理，
-              就构成一个向量空间。其中最核心的要求是：加法和数乘在 $V$ 中封闭。
+              <strong>最大公因式与辗转相除法：</strong>利用带余除法反复进行，可以得到多项式的最大公因式，且存在 $u, v \in \mathbb{F}[x]$ 使得 $(f, g) = uf + vg$（Bézout 恒等式）。这一结构与整数环完全平行。
             </p>
             <p>
-              例如，所有形如 $(x, y, z)$ 的三维向量构成向量空间 $\mathbb{R}^3$。
-              而平面上的单位圆 $\{ (x, y) \mid x^2 + y^2 = 1 \}$ 则不是向量空间——
-              因为两个单位向量的和不一定在单位圆上（加法不封闭）。
+              <strong>因式分解与不可约多项式：</strong>类似于整数的素因子分解，任何次数大于 $0$ 的多项式可以唯一地（不计次序和常数因子）分解为不可约多项式的乘积。但不可约性依赖于基域——$x^2 + 1$ 在 $\mathbb{R}[x]$ 中不可约，在 $\mathbb{C}[x]$ 中可分解为 $(x + i)(x - i)$，这直接导向了复数在代数中的必要性。
+            </p>
+            <p>
+              <strong>代数基本定理：</strong>任何次数大于 $0$ 的复系数多项式在 $\mathbb{C}$ 中至少有一个根。由此，$\mathbb{C}[x]$ 中的不可约多项式恰为一次多项式——复数域是<strong>代数封闭</strong>的。
             </p>
 
-            <h2>矩阵：线性变换的表示</h2>
+            <h2>第二板块：行列式</h2>
             <p>
-              矩阵是线性代数中最强大的工具之一。一个 $m \times n$ 的矩阵
-              本质上表示了一个从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性变换。
+              行列式是高等代数中第一个真正的"结构性"概念。给定方阵 $A = (a_{ij})_{n \times n}$，其行列式定义为：
+            </p>
+            <p>$$\det A = \sum_{\sigma \in S_n} \operatorname{sgn}(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \cdots a_{n\sigma(n)}$$</p>
+            <p>其中 $S_n$ 是 $n$ 阶置换群，$\operatorname{sgn}(\sigma)$ 是置换的符号。这个定义的要点：</p>
+            <p>
+              (1) 它是一个<strong>交错多重线性函数</strong>（对列向量而言）；<br>
+              (2) 它完全由三条公理唯一确定——规范性（单位矩阵的行列式为 $1$）、交错性（交换两列变号）、多重线性性（对每列线性）；<br>
+              (3) 公理化的处理方式本身就是一个重要的数学训练：<strong>从几条简单的性质出发，推导出所有其他性质</strong>。
             </p>
             <p>
-              例如，矩阵
-              $$A = \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}$$
-              作用于向量 $\mathbf{v} = (x, y)$ 时，将 $x$ 分量拉伸为原来的 2 倍，而 $y$
-              分量保持不变：
-              $$A\mathbf{v} = \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}
-              \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 2x \\ y \end{pmatrix}$$
-            </p>
-            <p>
-              这个简单的例子展示了一个核心观点：<strong>矩阵乘以向量，就是对这个向量做一次线性变换</strong>。
+              行列式最重要的性质：$\det(AB) = (\det A)(\det B)$；$A$ 可逆当且仅当 $\det A \neq 0$；行列式可以通过行（列）展开计算（Laplace 展开）。几何上，行列式的绝对值表示 $n$ 个列向量张成的平行多面体的体积——符号则标记了"定向"。
             </p>
 
-            <h2>矩阵乘法：变换的复合</h2>
+            <h2>第三板块：矩阵与线性方程组</h2>
             <p>
-              矩阵乘法的定义并非随意——它对应着线性变换的复合。如果矩阵 $B$ 表示变换 $T_1$，
-              矩阵 $A$ 表示变换 $T_2$，那么乘积 $AB$ 就表示先做 $T_1$ 再做 $T_2$ 的
-              复合变换 $T_2 \circ T_1$。
+              线性方程组 $A\mathbf{x} = \mathbf{b}$ 是线性代数最直接的动机来源，而矩阵则是组织和操作线性方程组的基本语言。
             </p>
             <p>
-              具体来说，若 $A$ 是 $m \times n$ 矩阵，$B$ 是 $n \times p$ 矩阵，
-              则乘积 $C = AB$ 是 $m \times p$ 矩阵，其中
-              $$C_{ij} = \sum_{k=1}^{n} A_{ik} B_{kj}$$
+              <strong>矩阵的秩：</strong>矩阵的行秩（行向量张成空间的维数）等于列秩，这个公共值称为矩阵的<strong>秩</strong> $\operatorname{rank}(A)$。秩是矩阵最基本的数值不变量，它决定了线性方程组的可解性和解空间的维数。
+            </p>
+            <p>
+              <strong>Gauss 消元法：</strong>通过初等行变换将矩阵化为行阶梯形，这一算法不仅给出了求解线性方程组的系统方法，还揭示了初等行变换对应着左乘初等矩阵，从而将计算工具与代数结构统一起来。
+            </p>
+            <p>
+              <strong>线性方程组解的结构定理：</strong>$A\mathbf{x} = \mathbf{b}$ 有解当且仅当 $\operatorname{rank}(A) = \operatorname{rank}(A \mid \mathbf{b})$。有解时，通解 = 一个特解 + 齐次方程的通解（即 $\ker A$）。$\dim(\ker A) = n - \operatorname{rank}(A)$——这就是著名的<strong>维数公式</strong>。
             </p>
 
+            <h2>第四板块：线性空间——公理化的转折</h2>
+            <p>
+              这是高等代数从"计算"走向"结构"的关键一步。我们不再把向量理解为$(x_1, x_2, \dots, x_n)$这样的数组，而是将其抽象化为满足八条公理的代数对象。
+            </p>
             <blockquote>
-              <p>
-                理解矩阵乘法的关键在于：不要把 $AB$ 看作一堆数字的运算规则，
-                而要理解它背后的几何意义——线性变换的复合。
-              </p>
+              <p>一个<strong>线性空间</strong>是一个集合 $V$，配有加法 $+$ 和数乘 $\cdot$（数域为 $\mathbb{F}$），满足封闭性、结合律、交换律、单位元、逆元、分配律和单位乘数等八条公理。</p>
             </blockquote>
-
-            <h2>线性方程组的矩阵视角</h2>
             <p>
-              线性方程组
-              $$\begin{cases} 2x + 3y = 5 \\ x - y = 1 \end{cases}$$
-              可以用矩阵形式简洁地写为 $A\mathbf{x} = \mathbf{b}$：
-              $$\begin{pmatrix} 2 & 3 \\ 1 & -1 \end{pmatrix}
-              \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 5 \\ 1 \end{pmatrix}$$
+              这一定义的力量在于其<strong>普适性</strong>：$\mathbb{R}^n$、多项式集合、连续函数集合、矩阵集合——所有这些在适当的加法和数乘下都构成线性空间，而线性空间的理论统一地适用于它们全部。
             </p>
             <p>
-              在这种视角下，求解线性方程组等价于寻找一个向量 $\mathbf{x}$，使得
-              经过线性变换 $A$ 后恰好得到 $\mathbf{b}$。
+              <strong>基与维数：</strong>线性空间 $V$ 的<strong>基</strong>是一组线性无关的向量，使得 $V$ 中任意向量都可以由它们线性表出。如果 $V$ 有一组含 $n$ 个向量的基，则 $V$ 的任何基都恰好含有 $n$ 个向量——这个数就是 $V$ 的<strong>维数</strong> $\dim V$。维数是线性空间的"大小"，在同构意义下完全分类了有限维线性空间：$\dim V = n \iff V \cong \mathbb{F}^n$。
+            </p>
+            <p>
+              <strong>子空间与直和：</strong>如果 $W_1, W_2$ 是 $V$ 的子空间，则 $\dim(W_1 + W_2) = \dim W_1 + \dim W_2 - \dim(W_1 \cap W_2)$。如果 $W_1 \cap W_2 = \{0\}$，则和为<strong>直和</strong> $W_1 \oplus W_2$，且 $\dim(W_1 \oplus W_2) = \dim W_1 + \dim W_2$。直和分解是理解线性变换结构的基本手段。
             </p>
 
-            <h2>小结</h2>
+            <h2>第五板块：线性变换与矩阵表示</h2>
             <p>
-              本文从几何直观出发，介绍了向量、向量空间、矩阵以及它们之间的关系。
-              这些概念构成了线性代数的地基。在后续文章中，我们将进一步探讨行列式、
-              特征值与特征向量、以及更高级的主题。
+              设 $V, W$ 是 $\mathbb{F}$ 上的线性空间。映射 $\mathcal{A}: V \to W$ 是<strong>线性变换</strong>（线性映射），如果它保持加法和数乘：$\mathcal{A}(\alpha + \beta) = \mathcal{A}(\alpha) + \mathcal{A}(\beta)$，$\mathcal{A}(k\alpha) = k\mathcal{A}(\alpha)$。
             </p>
+            <p>
+              <strong>矩阵表示：</strong>线性变换与矩阵之间的对应是高等代数最核心的思想之一。选定 $V$ 和 $W$ 的基后，每个线性变换 $\mathcal{A}: V \to W$ 唯一地由一个矩阵 $A \in \mathbb{F}^{m \times n}$ 表示。重要的是：<strong>同一线性变换在不同基下的矩阵是相似的</strong>（若 $V = W$）。因此，寻找线性变换的"最简形式"等价于在相似类中寻找最简单的矩阵——这就是对角化和 Jordan 标准形的几何本质。
+            </p>
+            <p>
+              <strong>核与像：</strong>$\ker \mathcal{A} = \{v \in V \mid \mathcal{A}v = 0\}$ 是 $V$ 的子空间，$\operatorname{im} \mathcal{A} = \{\mathcal{A}v \mid v \in V\}$ 是 $W$ 的子空间。维数定理断言：$\dim(\ker \mathcal{A}) + \dim(\operatorname{im} \mathcal{A}) = \dim V$。$\dim(\operatorname{im} \mathcal{A})$ 就是 $\mathcal{A}$ 在任何基下矩阵的秩。
+            </p>
+
+            <h2>第六板块：特征值与对角化</h2>
+            <p>
+              线性变换 $\mathcal{A}: V \to V$ 的一个核心问题是：是否存在一组基，使得 $\mathcal{A}$ 在这组基下的矩阵是对角矩阵？等价地：$V$ 是否可以分解为 $\mathcal{A}$ 的一维不变子空间的直和？
+            </p>
+            <p>
+              如果 $\mathcal{A}v = \lambda v$（$v \neq 0$），则 $\lambda$ 称为<strong>特征值</strong>，$v$ 称为对应的<strong>特征向量</strong>。特征值是特征多项式 $\det(\lambda I - A) = 0$ 的根。
+            </p>
+            <p>
+              $\mathcal{A}$ 可对角化当且仅当 $V$ 有一组由其特征向量构成的基，这等价于特征多项式的每个根 $\lambda_i$ 的<strong>几何重数</strong>（特征子空间的维数）等于其<strong>代数重数</strong>（作为特征多项式根的重数）。
+            </p>
+            <p>
+              当 $\mathcal{A}$ 不可对角化时，我们转向<strong>Jordan 标准形</strong>：任何复方阵都相似于一个 Jordan 形矩阵——对角线上是特征值，对角线上方可以有 $1$，对应于"广义特征向量链"。Jordan 标准形是相似分类的终极答案。
+            </p>
+
+            <h2>第七板块：二次型</h2>
+            <p>
+              $n$ 元<strong>二次型</strong>是一个二次齐次多项式：
+              $$Q(x_1, \dots, x_n) = \sum_{i=1}^{n} \sum_{j=1}^{n} a_{ij} x_i x_j = \mathbf{x}^T A \mathbf{x}$$
+              其中 $A$ 是对称矩阵。二次型出现在几何（二次曲线和二次曲面的分类）、物理（惯性张量）、优化（凸性与正定性）等众多领域。
+            </p>
+            <p>
+              <strong>化标准形：</strong>任何实二次型都可以通过<strong>正交变换</strong>（主轴定理）或<strong>配方法</strong>化为标准形 $\lambda_1 y_1^2 + \lambda_2 y_2^2 + \cdots + \lambda_n y_n^2$，其中 $\lambda_i$ 是 $A$ 的特征值。
+            </p>
+            <p>
+              <strong>惯性定理：</strong>实二次型在实非退化线性替换下，正项个数 $p$（正惯性指数）和负项个数 $q$（负惯性指数）是不变的——这称为 Sylvester 惯性定律。$(p, q)$ 完全分类了实二次型。
+            </p>
+            <p>
+              <strong>正定性：</strong>如果对所有 $\mathbf{x} \neq 0$ 都有 $\mathbf{x}^T A \mathbf{x} > 0$，则称 $A$（及对应二次型）为<strong>正定</strong>。正定性等价于 $A$ 的所有顺序主子式大于 $0$（Sylvester 准则），也等价于 $A$ 的所有特征值大于 $0$。正定矩阵在优化理论、微分几何和概率论中扮演着核心角色。
+            </p>
+
+            <h2>第八板块：λ-矩阵与相似标准形的系统理论</h2>
+            <p>
+              $\lambda$-矩阵（以多项式为元素的矩阵）提供了处理相似标准形问题的统一代数框架。一个矩阵 $A$ 的<strong>特征矩阵</strong> $\lambda I - A$ 是一个 $\lambda$-矩阵，其 Smith 标准形的不变因子和初等因子决定了 $A$ 的相似类。具体来说：
+            </p>
+            <p>
+              两个数字矩阵相似当且仅当它们的特征矩阵有相同的初等因子。初等因子直接给出 Jordan 块的尺寸和对应的特征值，从而唯一确定了 Jordan 标准形。这一理论将相似分类问题完全转化为多项式环上的模论问题，展示了结构代数的强大力量。
+            </p>
+
+            <h2>第九板块：欧几里得空间与内积</h2>
+            <p>
+              引入<strong>内积</strong> $\langle \cdot, \cdot \rangle$ 后，线性空间获得了"长度"和"角度"的几何结构，成为<strong>欧几里得空间</strong>（或称内积空间）。
+            </p>
+            <p>
+              <strong>正交性与 Gram–Schmidt 正交化：</strong>任意有限维内积空间存在标准正交基——这由 Gram–Schmidt 过程保证。在标准正交基下，内积简化为坐标向量的标准点积。
+            </p>
+            <p>
+              <strong>正交变换与对称变换：</strong>保持内积的线性变换称为<strong>正交变换</strong>，其在标准正交基下的矩阵满足 $A^T A = I$（正交矩阵）。实对称矩阵的特征值全为实数，且不同特征值对应的特征向量正交——这就是<strong>谱定理</strong>，它是主轴定理和（在无穷维推广中）量子力学中可观测量理论的基础。
+            </p>
+
+            <h2>全貌：高等代数的逻辑结构</h2>
+            <p>
+              回顾高等代数的各板块，它们不是彼此孤立的，而是构成了一个高度贯通的理论体系：
+            </p>
+            <p>
+              多项式环 $\mathbb{F}[x]$ 为特征多项式提供了理论基础 → 行列式刻画了线性变换的"体积缩放因子" → 矩阵将线性变换的计算转化为具体的数值操作 → 线性空间将具体计算抽象为普适的结构定理 → 线性变换和特征值理论揭示了"分解为简单部分"的代数本质 → 二次型将对称矩阵与几何和优化联系起来 → 欧几里得空间则在线性代数中引入了度量。
+            </p>
+            <p>
+              这个体系的核心哲学是：<strong>通过研究代数结构之间的保持结构的映射（同态），来理解结构本身。</strong>线性空间之间的线性映射、群之间的同态、环之间的同态——高等代数为所有后续的代数学习提供了最基本的范式。
+            </p>
+
           </div>
         </article>
-
-        <nav class="article-nav" id="article-nav" data-article-id="linear-algebra-intro">
-          <!-- JS 动态渲染 -->
-        </nav>
+        <nav class="article-nav" id="article-nav" data-article-id="linear-algebra-intro"></nav>
       </div>
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 数学笔记</p>
-      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
-    </div>
-  </footer>
-
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script defer src="../js/main.js"></script>
