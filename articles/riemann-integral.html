@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="从分割与黎曼和出发，严格定义定积分">
+  <title>黎曼积分的定义与性质 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a>
+        <a href="./">文章</a>
+        <a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>黎曼积分的定义与性质</h1>
+
+          <div class="article-meta">
+            <time datetime="2025-12-10">2025年12月10日</time>
+            <span class="category-tag">数学分析</span>
+          </div>
+
+          <div class="article-body">
+            <h2>从面积问题出发</h2>
+            <p>
+              定积分的核心问题是：如何严格定义曲线下方的面积？牛顿和莱布尼茨
+              用微积分基本定理给出了漂亮的计算方法，但黎曼提供了更基础的构造。
+            </p>
+
+            <h2>分割与黎曼和</h2>
+            <p>
+              给定区间 $[a, b]$，一个<strong>分割</strong> $P$ 是一组分点：
+              $$P: a = x_0 < x_1 < x_2 < \cdots < x_n = b$$
+              分割的<strong>细度</strong>（mesh）定义为最大子区间长度：
+              $$\|P\| = \max_{1 \leq i \leq n} (x_i - x_{i-1})$$
+            </p>
+            <p>
+              在每个子区间 $[x_{i-1}, x_i]$ 中任选一点 $\xi_i$，
+              构造<strong>黎曼和</strong>：
+              $$S(P, f) = \sum_{i=1}^{n} f(\xi_i)(x_i - x_{i-1})$$
+            </p>
+
+            <h2>黎曼积分的定义</h2>
+            <p>
+              如果存在一个数 $I$，使得对于任意 $\varepsilon > 0$，
+              存在 $\delta > 0$，当 $\|P\| < \delta$ 时，无论 $\xi_i$ 如何选取，
+              都有 $|S(P, f) - I| < \varepsilon$，则称 $f$ 在 $[a, b]$ 上
+              <strong>黎曼可积</strong>，并记
+              $$\int_a^b f(x)\,dx = I$$
+            </p>
+
+            <h2>可积性条件</h2>
+            <p>
+              一个重要的结论是：<strong>闭区间上的连续函数一定黎曼可积</strong>。
+              更一般地，闭区间上有界且几乎处处连续（间断点集为零测集）的函数
+              是黎曼可积的。例如，$[0, 1]$ 上的 Dirichlet 函数（有理数取 1，
+              无理数取 0）就不可积。
+            </p>
+
+            <h2>积分的基本性质</h2>
+            <p>
+              黎曼积分满足许多我们期望的性质：线性性
+              $\int (af + bg) = a\int f + b\int g$、
+              区间可加性 $\int_a^c f = \int_a^b f + \int_b^c f$、
+              以及保序性（若 $f \leq g$ 则 $\int f \leq \int g$）。
+            </p>
+            <p>
+              这些性质的严格证明都依赖于 ε-δ 语言，展示了分析学的力量。
+            </p>
+          </div>
+        </article>
+
+        <nav class="article-nav" id="article-nav" data-article-id="riemann-integral">
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 数学笔记</p>
+      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>

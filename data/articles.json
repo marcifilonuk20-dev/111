@@ -1,0 +1,68 @@
+{
+  "site": {
+    "title": "数学笔记",
+    "description": "个人数学知识分享",
+    "author": "数学爱好者",
+    "lang": "zh-CN"
+  },
+  "articles": [
+    {
+      "id": "linear-algebra-intro",
+      "title": "线性代数入门：向量与矩阵",
+      "date": "2026-03-15",
+      "excerpt": "从向量的几何直观出发，介绍线性代数的基本概念：向量运算、矩阵乘法及其几何意义。",
+      "category": "线性代数",
+      "tags": ["向量", "矩阵", "线性变换"],
+      "file": "linear-algebra-intro.html",
+      "featured": true
+    },
+    {
+      "id": "epsilon-delta",
+      "title": "深入理解 ε-δ 语言",
+      "date": "2026-02-20",
+      "excerpt": "极限的严格定义是微积分的基石。本文通过具体例子逐步讲解 ε-δ 语言的核心思想。",
+      "category": "数学分析",
+      "tags": ["极限", "连续性", "ε-δ"],
+      "file": "epsilon-delta.html",
+      "featured": true
+    },
+    {
+      "id": "bayes-theorem",
+      "title": "贝叶斯定理的直观理解",
+      "date": "2026-04-10",
+      "excerpt": "通过图形化和具体实例，深入理解贝叶斯定理以及它在概率推断中的核心作用。",
+      "category": "概率论",
+      "tags": ["贝叶斯", "条件概率", "统计推断"],
+      "file": "bayes-theorem.html",
+      "featured": true
+    },
+    {
+      "id": "group-theory-basics",
+      "title": "群论基础：对称性的数学",
+      "date": "2026-01-05",
+      "excerpt": "群论是研究对称性的语言。本文从具体例子出发，介绍群的定义、子群和同态的基本概念。",
+      "category": "抽象代数",
+      "tags": ["群", "对称", "子群", "同态"],
+      "file": "group-theory-basics.html",
+      "featured": false
+    },
+    {
+      "id": "riemann-integral",
+      "title": "黎曼积分的定义与性质",
+      "date": "2025-12-10",
+      "excerpt": "从分割与黎曼和出发，严格定义定积分，并讨论可积性条件与积分的基本性质。",
+      "category": "数学分析",
+      "tags": ["积分", "黎曼和", "可积性"],
+      "file": "riemann-integral.html",
+      "featured": false
+    }
+  ],
+  "categories": [
+    "线性代数",
+    "数学分析",
+    "概率论",
+    "抽象代数",
+    "数论",
+    "几何与拓扑"
+  ]
+}

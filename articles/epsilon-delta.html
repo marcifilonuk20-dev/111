@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="极限的严格定义是微积分的基石，本文通过具体例子讲解 ε-δ 语言的核心思想">
+  <title>深入理解 ε-δ 语言 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a>
+        <a href="./">文章</a>
+        <a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>深入理解 ε-δ 语言</h1>
+
+          <div class="article-meta">
+            <time datetime="2026-02-20">2026年2月20日</time>
+            <span class="category-tag">数学分析</span>
+          </div>
+
+          <div class="article-body">
+            <h2>为什么要学 ε-δ？</h2>
+            <p>
+              初学微积分时，我们往往满足于"极限就是越来越接近"这样的直觉理解。
+              然而，真正的数学分析要求我们能够严格地证明极限的存在与值。
+              ε-δ 语言（epsilon-delta）正是为此而生的精确工具。
+            </p>
+
+            <h2>极限的严格定义</h2>
+            <p>
+              设函数 $f(x)$ 在点 $a$ 的某个去心邻域内有定义。我们说
+              $$\lim_{x \to a} f(x) = L$$
+              当且仅当：对于任意给定的 $\varepsilon > 0$，存在 $\delta > 0$，
+              使得当 $0 < |x - a| < \delta$ 时，必有 $|f(x) - L| < \varepsilon$。
+            </p>
+            <p>
+              用通俗的话说：<strong>无论你把"足够接近 $L$"的标准定得多严格</strong>
+              （由 $\varepsilon$ 决定），<strong>我都能找到一个范围</strong>（由 $\delta$ 决定），
+              只要 $x$ 落在这个范围内，$f(x)$ 就一定满足你的标准。
+            </p>
+
+            <h2>一个简单例子</h2>
+            <p>
+              证明 $\lim_{x \to 2} (3x + 1) = 7$。
+            </p>
+            <p>
+              <strong>分析</strong>：对于任意 $\varepsilon > 0$，我们需要找到 $\delta > 0$，
+              使得当 $0 < |x - 2| < \delta$ 时，
+              $$|(3x + 1) - 7| = |3x - 6| = 3|x - 2| < \varepsilon$$
+              因此只需令 $\delta = \frac{\varepsilon}{3}$ 即可。
+            </p>
+            <p>
+              <strong>证明</strong>：对任意 $\varepsilon > 0$，取 $\delta = \varepsilon/3$。
+              当 $0 < |x - 2| < \delta$ 时，有
+              $$|(3x + 1) - 7| = 3|x - 2| < 3\delta = \varepsilon$$
+              故 $\lim_{x \to 2} (3x + 1) = 7$。
+            </p>
+
+            <h2>ε-δ 的核心思想</h2>
+            <p>
+              ε-δ 定义的真正力量在于它将一个"动态"的过程（$x$ 趋近于 $a$）转化为一个
+              "静态"的条件判断。这使得我们能够在证明中精确地控制每一步的逻辑。
+            </p>
+            <p>
+              理解 ε-δ 语言是进入真正数学分析世界的门票。一旦掌握，连续性、可导性、
+              可积性这些概念的定义都将迎刃而解。
+            </p>
+          </div>
+        </article>
+
+        <nav class="article-nav" id="article-nav" data-article-id="epsilon-delta">
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 数学笔记</p>
+      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>
