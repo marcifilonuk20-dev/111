@@ -231,6 +231,9 @@
     all.forEach(function (article, i) {
       container.appendChild(createArticleCard(article, i));
     });
+    requestAnimationFrame(function () {
+      if (scrollRevealCheck) scrollRevealCheck();
+    });
   }
 
   /* ========== Render Article List ========== */
@@ -257,7 +260,9 @@
     if (!articles.length) { container.innerHTML = '<div class="empty-state"><p>还没有文章</p></div>'; return; }
     articles.forEach(function (a) { container.appendChild(createArticleListItem(a)); });
     container._articlesData = articles;
-    if (scrollRevealCheck) { setTimeout(scrollRevealCheck, 50); }
+    requestAnimationFrame(function () {
+      if (scrollRevealCheck) scrollRevealCheck();
+    });
   }
 
   /* ========== Category Filters ========== */
@@ -301,7 +306,9 @@
     });
     if (!filtered.length) { container.innerHTML = '<div class="empty-state"><p>没有找到匹配的文章</p></div>'; return; }
     filtered.forEach(function (a) { container.appendChild(createArticleListItem(a)); });
-    if (scrollRevealCheck) { setTimeout(scrollRevealCheck, 50); }
+    requestAnimationFrame(function () {
+      if (scrollRevealCheck) scrollRevealCheck();
+    });
   }
 
   function initSearch() {
