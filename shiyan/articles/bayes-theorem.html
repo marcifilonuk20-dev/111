@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="通过图形化和具体实例，深入理解贝叶斯定理">
+  <title>贝叶斯定理的直观理解 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a>
+        <a href="./">文章</a>
+        <a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>贝叶斯定理的直观理解</h1>
+
+          <div class="article-meta">
+            <time datetime="2026-04-10">2026年4月10日</time>
+            <span class="category-tag">概率论</span>
+          </div>
+
+          <div class="article-body">
+            <h2>贝叶斯定理的公式</h2>
+            <p>
+              贝叶斯定理是概率论中最优美的结论之一。它告诉我们如何在已知某些条件下，
+              更新我们对事件发生概率的信念：
+              $$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
+            </p>
+            <p>
+              其中 $P(A \mid B)$ 是在事件 $B$ 发生的条件下事件 $A$ 发生的概率
+              （后验概率），$P(A)$ 是事件 $A$ 的先验概率，
+              $P(B \mid A)$ 是似然度，$P(B)$ 是边际概率。
+            </p>
+
+            <h2>一个经典的医学检测例子</h2>
+            <p>
+              假设某种疾病在人群中的发病率为 $0.1\%$，即 $P(D) = 0.001$。
+              有一种检测方法，对于真正患病的人有 $99\%$ 的概率检测出阳性（灵敏度），
+              对于不患病的人有 $2\%$ 的概率误报为阳性（假阳性率）。
+            </p>
+            <p>
+              问题是：<strong>如果一个人的检测结果为阳性，他真正患病的概率是多少？</strong>
+            </p>
+            <p>
+              直觉上很多人会猜 $99\%$，但实际计算却大不相同：
+              $$P(D \mid +) = \frac{P(+ \mid D) \cdot P(D)}{P(+)}$$
+              $$P(+) = P(+ \mid D)P(D) + P(+ \mid \neg D)P(\neg D)$$
+              $$= 0.99 \times 0.001 + 0.02 \times 0.999 = 0.02097$$
+              $$P(D \mid +) = \frac{0.99 \times 0.001}{0.02097} \approx 0.047 \approx 4.7\%$$
+            </p>
+            <p>
+              检测阳性后真正患病的概率竟然不到 $5\%$！这是因为疾病本身非常罕见，
+              而假阳性率相对来说并不算低，导致阳性结果中大部分是误报。
+            </p>
+
+            <h2>先验与后验</h2>
+            <p>
+              这个例子完美展示了贝叶斯定理的核心哲学：<strong>先验信念 + 新证据 → 更新后的信念</strong>。
+              我们的先验信念 $P(D) = 0.1\%$ 在观察到阳性检测结果后，
+              更新为后验概率 $P(D \mid +) \approx 4.7\%$。概率确实大幅上升了（约 47 倍），
+              但离确诊还很远。
+            </p>
+            <p>
+              贝叶斯推断的这种思维方式在机器学习、统计决策、医学诊断等领域有着广泛的应用。
+            </p>
+          </div>
+        </article>
+
+        <nav class="article-nav" id="article-nav" data-article-id="bayes-theorem">
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 数学笔记</p>
+      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>

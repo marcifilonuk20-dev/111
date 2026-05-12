@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="群论是研究对称性的语言，从具体例子出发介绍群的基本概念">
+  <title>群论基础：对称性的数学 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a>
+        <a href="./">文章</a>
+        <a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>群论基础：对称性的数学</h1>
+
+          <div class="article-meta">
+            <time datetime="2026-01-05">2026年1月5日</time>
+            <span class="category-tag">抽象代数</span>
+          </div>
+
+          <div class="article-body">
+            <h2>什么是对称性？</h2>
+            <p>
+              一个正方形的对称性是什么？你可以将它旋转 $90^\circ$、$180^\circ$、$270^\circ$，
+              或者沿对角线翻转——这些操作后正方形看起来和原来一样。
+              群论正是研究这类对称性的数学语言。
+            </p>
+
+            <h2>群的定义</h2>
+            <p>
+              一个<strong>群</strong> $(G, \cdot)$ 是一个集合 $G$ 配上一个二元运算 $\cdot$，
+              满足以下四条公理：
+            </p>
+            <ol>
+              <li><strong>封闭性</strong>：对所有 $a, b \in G$，有 $a \cdot b \in G$。</li>
+              <li><strong>结合律</strong>：对所有 $a, b, c \in G$，有 $(a \cdot b) \cdot c = a \cdot (b \cdot c)$。</li>
+              <li><strong>单位元</strong>：存在 $e \in G$，使得对所有 $a \in G$，有 $e \cdot a = a \cdot e = a$。</li>
+              <li><strong>逆元</strong>：对每个 $a \in G$，存在 $a^{-1} \in G$，使得 $a \cdot a^{-1} = a^{-1} \cdot a = e$。</li>
+            </ol>
+
+            <h2>经典例子</h2>
+            <p>
+              <strong>整数加群 $(\mathbb{Z}, +)$</strong>：单位元是 $0$，$n$ 的逆元是 $-n$。
+              这是最基础的无限群。
+            </p>
+            <p>
+              <strong>二面体群 $D_4$</strong>：正方形的所有对称操作构成一个 8 阶群。
+              其中 4 个旋转和 4 个反射。这个群不满足交换律——先旋转再翻转
+              和先翻转再旋转，结果通常不同。
+            </p>
+            <p>
+              <strong>置换群 $S_n$</strong>：$n$ 个元素的所有排列构成一个群，
+              运算为排列的复合。$S_n$ 的阶为 $n!$。
+            </p>
+
+            <h2>子群与同态</h2>
+            <p>
+              群 $G$ 的一个子集 $H$ 如果自身也构成群（在相同的运算下），则称 $H$ 为 $G$ 的
+              <strong>子群</strong>。例如，偶置换的集合 $A_n$ 是 $S_n$ 的子群（交错群）。
+            </p>
+            <p>
+              两个群之间的<strong>同态</strong>是一个保持群结构的映射
+              $\varphi: G \to H$，满足 $\varphi(a \cdot b) = \varphi(a) \cdot \varphi(b)$。
+              如果 $\varphi$ 还是双射，则称为<strong>同构</strong>，记作 $G \cong H$。
+            </p>
+            <p>
+              同构的群在代数上是"相同"的——它们只是元素的名字不同而已。
+            </p>
+          </div>
+        </article>
+
+        <nav class="article-nav" id="article-nav" data-article-id="group-theory-basics">
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 数学笔记</p>
+      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
+    </div>
+  </footer>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>
