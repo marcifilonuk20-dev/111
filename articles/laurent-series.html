@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="泰勒级数的推广——洛朗级数，处理具有孤立奇点的复变函数的核心工具">
+  <title>洛朗级数与奇点分类 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>洛朗级数与奇点分类</h1>
+          <div class="article-meta">
+            <time datetime="2026-05-12">2026年5月12日</time>
+            <span class="category-tag">复变函数</span>
+          </div>
+          <div class="article-body">
+
+            <h2>1. 从泰勒级数到洛朗级数</h2>
+            <p>
+              解析函数可以在解析点附近展开为泰勒级数（幂级数）。但如果函数在 $z_0$ 处不解析（有一个<strong>孤立奇点</strong>），泰勒级数就失效了。洛朗级数是泰勒级数的推广，它允许<strong>负幂次</strong>的出现，从而可以在圆环区域（含奇点的去心邻域）内表示函数。
+            </p>
+
+            <h2>2. 洛朗级数的定义</h2>
+            <p>
+              设 $f$ 在圆环 $r < |z - z_0| < R$（$0 \leq r < R \leq \infty$）内解析。则 $f$ 在该圆环内可以唯一地展开为<strong>洛朗级数</strong>：
+            </p>
+            <p>$$f(z) = \sum_{n=-\infty}^{\infty} a_n (z - z_0)^n = \sum_{n=1}^{\infty} \frac{a_{-n}}{(z - z_0)^n} + \sum_{n=0}^{\infty} a_n (z - z_0)^n$$</p>
+            <p>其中系数由围道积分给出：</p>
+            <p>$$a_n = \frac{1}{2\pi i} \oint_\gamma \frac{f(\zeta)}{(\zeta - z_0)^{n+1}}\,d\zeta$$</p>
+            <p>
+              这里 $\gamma$ 是圆环内围绕 $z_0$ 的任意正向简单闭曲线。负幂部分 $\sum_{n=1}^{\infty} a_{-n}(z - z_0)^{-n}$ 称为<strong>主要部分</strong>（principal part），正幂部分 $\sum_{n=0}^{\infty} a_n(z - z_0)^n$ 称为<strong>解析部分</strong>（analytic part）。
+            </p>
+
+            <h2>3. 一个直接构造洛朗级数的例子</h2>
+            <p>
+              将 $f(z) = \frac{1}{z(1 - z)}$ 在圆环 $0 < |z| < 1$ 内展开为洛朗级数。
+            </p>
+            <p>
+              作部分分式分解：$\frac{1}{z(1 - z)} = \frac{1}{z} + \frac{1}{1 - z}$。
+            </p>
+            <p>
+              在 $0 < |z| < 1$ 内，$\frac{1}{1 - z} = \sum_{n=0}^{\infty} z^n$（几何级数）。因此：
+            </p>
+            <p>
+              $$f(z) = \frac{1}{z} + \sum_{n=0}^{\infty} z^n = \frac{1}{z} + 1 + z + z^2 + \cdots$$
+            </p>
+            <p>
+              主要部分仅含一项 $a_{-1}z^{-1} = \frac{1}{z}$，解析部分为 $\sum_{n=0}^{\infty} z^n$。注意到在 $|z| > 1$ 的圆环中，$\frac{1}{1 - z}$ 的展开方式不同（需要用 $\frac{1}{z} \cdot \frac{1}{1 - 1/z}$），得到不同的洛朗级数——这体现了洛朗展开对圆环区域的依赖性。
+            </p>
+
+            <h2>4. 孤立奇点的三种分类</h2>
+            <p>
+              设 $z_0$ 是 $f$ 的孤立奇点，$f$ 在去心邻域 $0 < |z - z_0| < R$ 内有洛朗展开。根据<strong>主要部分中非零项的数量</strong>，奇点分为三类：
+            </p>
+
+            <p><strong>(1) 可去奇点（removable singularity）：</strong>主要部分全为零。此时极限 $\lim_{z \to z_0} f(z)$ 存在且有限。定义 $f(z_0)$ 为该极限值后，$f$ 在 $z_0$ 处变为解析。例如 $f(z) = \frac{\sin z}{z}$ 在 $z = 0$ 处有可去奇点，因为 $\lim_{z \to 0} \frac{\sin z}{z} = 1$。</p>
+
+            <p><strong>(2) 极点（pole）：</strong>主要部分仅有有限个非零项。设 $a_{-m} \neq 0$ 而 $a_{-k} = 0$（$k > m$），则 $z_0$ 为 $m$ <strong>阶极点</strong>。此时 $\lim_{z \to z_0} |f(z)| = \infty$。例如 $f(z) = \frac{1}{z^3}$ 在 $z = 0$ 有三阶极点。</p>
+
+            <p><strong>(3) 本性奇点（essential singularity）：</strong>主要部分有无穷多个非零项。本性奇点附近函数的行为极其复杂——根据<strong>Casorati–Weierstrass 定理</strong>，在本性奇点的任意邻域内，函数值在复平面中稠密。例如 $f(z) = e^{1/z} = \sum_{n=0}^{\infty} \frac{1}{n!} z^{-n}$ 在 $z = 0$ 有本性奇点。</p>
+
+            <h2>5. 洛朗级数与留数的联系（预告）</h2>
+            <p>
+              洛朗展开中 $a_{-1}$（即 $(z - z_0)^{-1}$ 项的系数）称为 $f$ 在 $z_0$ 处的<strong>留数</strong>（residue），记作 $\operatorname{Res}(f, z_0)$。由系数的积分表示直接得到：
+            </p>
+            <p>$$\oint_\gamma f(z)\,dz = 2\pi i \cdot a_{-1} = 2\pi i \cdot \operatorname{Res}(f, z_0)$$</p>
+            <p>
+              这就是留数定理的雏形：沿闭合曲线的积分归结为求被积函数在奇点处的留数——即洛朗级数中 $(z - z_0)^{-1}$ 这一项的系数。正是这个简单而深刻的联系使得复积分在大量实际问题中极为高效。
+            </p>
+
+            <h2>6. 解析部分与主要部分的几何含义</h2>
+            <p>
+              洛朗级数的两部分各自有不同的收敛行为。主要部分 $\sum_{n=1}^{\infty} a_{-n}(z - z_0)^{-n}$ 做变量代换 $w = 1/(z - z_0)$ 后变为 $w$ 的幂级数，它在 $|w| < 1/r$ 即 $|z - z_0| > r$ 时收敛。解析部分在 $|z - z_0| < R$ 时收敛。两者在圆环 $r < |z - z_0| < R$ 内同时收敛，这正是洛朗展开有效的区域。
+            </p>
+            <p>
+              这一观察也解释了为什么不同圆环区域中同一函数的洛朗展开可以不同：解析部分（对 $z_0$ 的泰勒展开）是唯一的，但主要部分取决于圆环的"内半径"——内边界之外的奇点会影响主要部分的结构。
+            </p>
+
+            <h2>小结</h2>
+            <p>
+              洛朗级数是复分析中连接局部行为（奇点分类）与全局行为（围道积分）的关键桥梁。通过将函数展开为洛朗级数，我们不仅可以精确刻画奇点的本质，还能将复杂的围道积分简化为系数提取——这正是下一篇文章将要详细讨论的留数定理的核心思想。
+            </p>
+
+          </div>
+        </article>
+        <nav class="article-nav" id="article-nav" data-article-id="laurent-series"></nav>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>

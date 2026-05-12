@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="深入讨论复变函数可导性与解析性，推导柯西-黎曼方程">
+  <title>解析函数与柯西-黎曼方程 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>解析函数与柯西-黎曼方程</h1>
+          <div class="article-meta">
+            <time datetime="2026-05-12">2026年5月12日</time>
+            <span class="category-tag">复变函数</span>
+          </div>
+          <div class="article-body">
+
+            <h2>1. 复变函数的导数——一个苛刻得多的定义</h2>
+            <p>
+              复变函数 $f$ 在点 $z_0$ 处的<strong>导数</strong>定义为：
+            </p>
+            <p>$$f'(z_0) = \lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0}$$</p>
+            <p>
+              这个定义在形式上与实函数完全一致，但含义迥然不同：差商 $\frac{f(z) - f(z_0)}{z - z_0}$ 的极限必须沿复平面上<strong>所有可能的路径</strong>都收敛到同一个值。实函数只需考虑左右两侧，复函数则需要考虑无穷多种趋近方式。正是这一苛刻的要求使得可导的复变函数具有许多实可导函数所没有的刚性性质。
+            </p>
+
+            <h2>2. 柯西-黎曼方程（Cauchy–Riemann）</h2>
+            <p>
+              令 $f(z) = u(x, y) + i v(x, y)$，其中 $z = x + iy$。假设 $f$ 在 $z_0 = x_0 + i y_0$ 处可导。分别沿实轴方向（$z = x + iy_0$）和虚轴方向（$z = x_0 + iy$）计算差商极限：
+            </p>
+            <p>
+              沿实轴：$$f'(z_0) = u_x(x_0, y_0) + i v_x(x_0, y_0)$$<br>
+              沿虚轴：$$f'(z_0) = v_y(x_0, y_0) - i u_y(x_0, y_0)$$
+            </p>
+            <p>
+              令两者相等，比较实部和虚部得到著名的<strong>柯西-黎曼方程</strong>：
+            </p>
+            <p>$$\boxed{u_x = v_y, \quad u_y = -v_x}$$</p>
+            <p>
+              C-R 方程是复变函数可导的<strong>必要条件</strong>。加上 $u, v$ 在 $(x_0, y_0)$ 处可微（作为二元实函数），C-R 方程也是<strong>充分条件</strong>。此时 $f'(z_0) = u_x + i v_x = v_y - i u_y$。
+            </p>
+
+            <h2>3. 验证经典例子</h2>
+            <p>
+              <strong>$f(z) = z^2$：</strong>$u = x^2 - y^2$，$v = 2xy$。计算偏导数：$u_x = 2x$，$u_y = -2y$，$v_x = 2y$，$v_y = 2x$。C-R 方程成立（$u_x = v_y$，$u_y = -v_x$），故 $f$ 在全平面可导，且 $f'(z) = 2x + i2y = 2z$。
+            </p>
+            <p>
+              <strong>$f(z) = \overline{z}$：</strong>$u = x$，$v = -y$。$u_x = 1$，$v_y = -1$。C-R 方程 $u_x = v_y$ 不成立（$1 \neq -1$），故 $\overline{z}$ 处处不可导，尽管其实部和虚部都是非常"好"的函数。
+            </p>
+            <p>
+              这个对比极其重要：$\overline{z}$ 作为 $\mathbb{R}^2 \to \mathbb{R}^2$ 的映射是光滑的（线性映射 $(x, y) \mapsto (x, -y)$），但它<strong>不是</strong>复可导的。由此可见，复可导性是附加在二元实函数之上的一个<strong>高度非平凡的代数约束</strong>。
+            </p>
+
+            <h2>4. 解析函数与全纯函数</h2>
+            <p>
+              $f$ 在 $z_0$ 处<strong>解析</strong>（analytic）或称<strong>全纯</strong>（holomorphic），如果 $f$ 在 $z_0$ 的某个邻域内处处可导。$f$ 在区域 $D$ 上解析，如果它在 $D$ 内的每一点都解析。
+            </p>
+            <p>
+              <strong>注意：</strong>在一点可导不一定在该点解析。例如 $f(z) = |z|^2 = z \overline{z}$ 只在 $z = 0$ 处可导（$f'(0) = 0$），但在 $z = 0$ 的任何邻域内都不可导，因此它在 $0$ 处不可解析。
+            </p>
+            <p>
+              解析函数具有一系列令人惊叹的性质，这些性质在实函数世界中完全没有对应物：如果 $f$ 在一个区域上解析，那么它在区域内<strong>无穷次可导</strong>，它可以<strong>局部展开为幂级数</strong>，而且全由其在<strong>边界上的值</strong>所决定（柯西积分公式）。
+            </p>
+
+            <h2>5. 调和函数与解析函数的实虚部</h2>
+            <p>
+              如果 $f = u + iv$ 解析，且 $u, v$ 有连续的二阶偏导数（这可由解析性推出），则对 C-R 方程 $u_x = v_y$ 关于 $x$ 求偏导、$u_y = -v_x$ 关于 $y$ 求偏导后相加：
+            </p>
+            <p>
+              $$u_{xx} + u_{yy} = v_{yx} - v_{xy} = 0$$
+            </p>
+            <p>
+              即 $u$ 满足<strong>拉普拉斯方程</strong> $\Delta u = 0$。同样 $\Delta v = 0$。满足拉普拉斯方程的函数称为<strong>调和函数</strong>。
+            </p>
+            <p>
+              因此：<strong>解析函数的实部和虚部都是调和函数。</strong>反过来，给定一个调和函数 $u$，我们可以找到其<strong>共轭调和函数</strong> $v$（通过解 C-R 方程确定到相差一个常数），使得 $f = u + iv$ 解析。
+            </p>
+            <p>
+              这一联系使复分析成为求解二维拉普拉斯方程（出现在热传导、静电学、流体力学等众多物理问题中）的强大工具——解析函数提供了一个取之不尽用之不竭的调和函数来源。
+            </p>
+
+            <h2>6. C-R 方程的极坐标形式</h2>
+            <p>
+              当使用极坐标 $z = re^{i\theta}$ 时，C-R 方程有等价的极坐标形式。令 $u(r, \theta), v(r, \theta)$，可导条件为：
+            </p>
+            <p>$$u_r = \frac{1}{r} v_\theta, \quad v_r = -\frac{1}{r} u_\theta$$</p>
+            <p>
+              这两种形式在不同场景下各有便利之处。例如，验证 $f(z) = \log z$（对数函数）的解析性时，极坐标形式更为自然。
+            </p>
+
+            <h2>小结</h2>
+            <p>
+              柯西-黎曼方程是复分析的第一道门槛。它们将"复可导"这一抽象要求转化为一对简洁的偏微分方程，从而搭建了复分析与实分析、偏微分方程之间的桥梁。在下一篇中，我们将看到 C-R 方程如何与复积分结合，产生柯西积分定理这一复分析中最深刻的结果。
+            </p>
+
+          </div>
+        </article>
+        <nav class="article-nav" id="article-nav" data-article-id="analytic-cauchy-riemann"></nav>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>

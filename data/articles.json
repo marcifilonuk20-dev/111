@@ -7,6 +7,66 @@
   },
   "articles": [
     {
+      "id": "complex-numbers-basics",
+      "title": "复数的基本概念与几何表示",
+      "date": "2026-05-10",
+      "excerpt": "从虚数单位的引入出发，系统介绍复数的代数形式、极坐标形式、复平面的几何意义以及欧拉公式。",
+      "category": "复变函数",
+      "tags": ["复数", "复平面", "欧拉公式", "极坐标"],
+      "file": "complex-numbers-basics.html",
+      "featured": true
+    },
+    {
+      "id": "complex-limits-continuity",
+      "title": "复变函数的极限与连续性",
+      "date": "2026-05-11",
+      "excerpt": "将实分析中的极限概念推广到复平面，讨论复变函数极限的严格定义、连续性与实函数的本质区别。",
+      "category": "复变函数",
+      "tags": ["极限", "连续性", "复变函数", "区域"],
+      "file": "complex-limits-continuity.html",
+      "featured": true
+    },
+    {
+      "id": "analytic-cauchy-riemann",
+      "title": "解析函数与柯西-黎曼方程",
+      "date": "2026-05-12",
+      "excerpt": "深入讨论复变函数可导性与解析性的等价条件，推导柯西-黎曼方程并探讨其与调和函数的关系。",
+      "category": "复变函数",
+      "tags": ["解析函数", "柯西-黎曼方程", "调和函数", "全纯函数"],
+      "file": "analytic-cauchy-riemann.html",
+      "featured": true
+    },
+    {
+      "id": "complex-integration",
+      "title": "复积分与柯西积分定理",
+      "date": "2026-05-12",
+      "excerpt": "从复平面上曲线积分的定义出发，逐步建立柯西积分定理和柯西积分公式，这是复分析中最深刻的结果之一。",
+      "category": "复变函数",
+      "tags": ["复积分", "柯西积分定理", "柯西积分公式", "围道积分"],
+      "file": "complex-integration.html",
+      "featured": true
+    },
+    {
+      "id": "laurent-series",
+      "title": "洛朗级数与奇点分类",
+      "date": "2026-05-12",
+      "excerpt": "泰勒级数的推广——洛朗级数允许负幂项，是处理具有孤立奇点的复变函数的核心工具。",
+      "category": "复变函数",
+      "tags": ["洛朗级数", "奇点", "极点", "本性奇点"],
+      "file": "laurent-series.html",
+      "featured": false
+    },
+    {
+      "id": "conformal-mapping",
+      "title": "共形映射与分式线性变换",
+      "date": "2026-05-12",
+      "excerpt": "探究复变函数作为共形映射的几何性质，重点讨论分式线性变换（Möbius变换）及其在区域映射中的应用。",
+      "category": "复变函数",
+      "tags": ["共形映射", "保角性", "Möbius变换", "分式线性变换"],
+      "file": "conformal-mapping.html",
+      "featured": false
+    },
+    {
       "id": "linear-algebra-intro",
       "title": "线性代数入门：向量与矩阵",
       "date": "2026-03-15",
@@ -34,7 +94,7 @@
       "category": "概率论",
       "tags": ["贝叶斯", "条件概率", "统计推断"],
       "file": "bayes-theorem.html",
-      "featured": true
+      "featured": false
     },
     {
       "id": "group-theory-basics",
@@ -58,6 +118,7 @@
     }
   ],
   "categories": [
+    "复变函数",
     "线性代数",
     "数学分析",
     "概率论",

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="从复平面上曲线积分的定义出发，建立柯西积分定理和柯西积分公式">
+  <title>复积分与柯西积分定理 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>复积分与柯西积分定理</h1>
+          <div class="article-meta">
+            <time datetime="2026-05-12">2026年5月12日</time>
+            <span class="category-tag">复变函数</span>
+          </div>
+          <div class="article-body">
+
+            <h2>1. 复平面上曲线积分的定义</h2>
+            <p>
+              设 $\gamma$ 是复平面上的一条光滑（或分段光滑）有向曲线，参数化为 $z(t) = x(t) + i y(t)$，$t \in [a, b]$。$f = u + iv$ 在 $\gamma$ 上连续。定义 $f$ 沿 $\gamma$ 的<strong>复积分</strong>（也称围道积分）：
+            </p>
+            <p>$$\int_\gamma f(z)\,dz = \int_a^b f(z(t)) \cdot z'(t)\,dt$$</p>
+            <p>展开为实部和虚部，可以看出复积分包含了两个实线积分：</p>
+            <p>$$\int_\gamma f(z)\,dz = \int_\gamma (u\,dx - v\,dy) + i\int_\gamma (v\,dx + u\,dy)$$</p>
+
+            <h2>2. 复积分的基本性质</h2>
+            <p>复积分满足线性性：$\int_\gamma (\alpha f + \beta g) = \alpha \int_\gamma f + \beta \int_\gamma g$。</p>
+            <p>反向积分变号：$\int_{-\gamma} f(z)\,dz = -\int_\gamma f(z)\,dz$。</p>
+            <p>一条重要的不等式——<strong>ML 不等式</strong>：如果 $|f(z)| \leq M$ 在 $\gamma$ 上成立，且 $\gamma$ 的长度为 $L$，则</p>
+            <p>$$\left|\int_\gamma f(z)\,dz\right| \leq M \cdot L$$</p>
+            <p>这个看似简单的不等式是许多收敛性和误差估计证明中的关键步骤。</p>
+
+            <h2>3. 牛顿-莱布尼茨公式的复版本</h2>
+            <p>
+              如果 $f$ 在区域 $D$ 上连续，且存在 $F$ 在 $D$ 上解析使得 $F'(z) = f(z)$（即 $F$ 是 $f$ 的原函数），则对 $D$ 内任意从 $z_1$ 到 $z_2$ 的有向曲线 $\gamma$：
+            </p>
+            <p>$$\int_\gamma f(z)\,dz = F(z_2) - F(z_1)$$</p>
+            <p>这意味着积分与路径无关，只取决于起点和终点。特别地，若 $\gamma$ 是闭曲线，则 $\oint_\gamma f(z)\,dz = 0$。</p>
+            <p>
+              但问题是：并非每个连续函数都有原函数。$f(z) = \overline{z}$ 连续但不可导，$\oint_{|z|=1} \overline{z}\,dz = 2\pi i \neq 0$，验证了路径无关性需要更强的条件——这正是柯西定理要回答的问题。
+            </p>
+
+            <h2>4. 柯西积分定理（Cauchy–Goursat）</h2>
+            <p>
+              这是复分析中最基本的定理之一。它表明：在适当条件下，解析函数沿闭合曲线的积分为零。
+            </p>
+            <blockquote>
+              <p><strong>柯西积分定理：</strong>如果 $f$ 在单连通区域 $D$ 上解析，则对 $D$ 内任意闭合光滑（或分段光滑）曲线 $\gamma$，有</p>
+              <p>$$\oint_\gamma f(z)\,dz = 0$$</p>
+            </blockquote>
+            <p>
+              柯西最初证明这个定理时要求 $f'$ 连续。Goursat 后来去掉了这个条件，只要求 $f$ 解析（即 $f'$ 存在）就足够了——这一改进在理论上是重要的，因为它意味着柯西积分定理是解析性自身的推论，而非附加的光滑性假设。
+            </p>
+
+            <h2>5. 柯西定理的重要推论</h2>
+            <p>
+              <strong>路径无关性：</strong>若 $f$ 在单连通区域 $D$ 上解析，则 $\int_\gamma f(z)\,dz$ 只依赖于 $\gamma$ 的起点和终点，与路径无关。这意味着解析函数<strong>必定有原函数</strong>：$F(z) = \int_{z_0}^z f(\zeta)\,d\zeta$（沿任意路径）就是 $f$ 的原函数。
+            </p>
+            <p>
+              <strong>复合闭路定理（变形不变性）：</strong>如果 $f$ 在一个包含了两条同伦闭曲线的区域上解析，则沿这两条曲线的积分相等。这使得我们可以将复杂的积分路径变形为更易计算的形式（如圆周），而不改变积分值。
+            </p>
+
+            <h2>6. 柯西积分公式——解析函数由其边界值决定</h2>
+            <p>
+              这是复分析中最优美的结果之一：
+            </p>
+            <blockquote>
+              <p><strong>柯西积分公式：</strong>设 $f$ 在包含闭圆盘 $\overline{D}(z_0, R)$ 的一个区域上解析，$\gamma$ 为圆周 $|z - z_0| = r$（正向），则对内点 $z_0$ 有</p>
+              <p>$$f(z_0) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z - z_0}\,dz$$</p>
+            </blockquote>
+            <p>
+              这个公式揭示了一个深刻的原理：<strong>解析函数在区域内部的值完全由其在边界上的值决定。</strong>实可微函数没有类似的全局性质——这是复解析性与实可微性之间最本质的差异之一。
+            </p>
+
+            <h2>7. 柯西积分公式的高阶导数形式</h2>
+            <p>
+              对柯西积分公式逐次求导（这在积分号下求导是合法的，因为分母的奇异性提供了足够好的收敛性），得到：
+            </p>
+            <p>$$f^{(n)}(z_0) = \frac{n!}{2\pi i} \oint_\gamma \frac{f(z)}{(z - z_0)^{n+1}}\,dz$$</p>
+            <p>
+              这是一个令人震惊的结论：<strong>如果 $f$ 在一个区域上一次可导（解析），那么它在该区域内就是无穷次可导的，</strong>而且所有导数都可以通过积分表示出来。在实函数中，$C^1$ 远不能推出 $C^2$，更不用说 $C^\infty$ 了。复分析中这种"一次等价于无穷次"的刚性是解析函数所有美妙性质的源头。
+            </p>
+
+            <h2>8. 一个计算实例</h2>
+            <p>
+              计算 $\displaystyle\oint_{|z|=2} \frac{e^z}{z - 1}\,dz$。
+            </p>
+            <p>
+              令 $f(z) = e^z$，则 $f$ 在整个复平面上解析。圆周 $|z| = 2$ 包含了 $z = 1$。由柯西积分公式（取 $z_0 = 1$）：
+            </p>
+            <p>$$\oint_{|z|=2} \frac{e^z}{z - 1}\,dz = 2\pi i \cdot f(1) = 2\pi i e$$</p>
+            <p>复积分的威力在此显现：一个看似复杂的围道积分，只需识别出它符合柯西积分公式的结构，即可直接读出答案。后续的留数定理将这一思想推广到更一般的被积函数。</p>
+
+            <h2>小结</h2>
+            <p>
+              柯西积分定理和柯西积分公式构成了复分析的理论核心。它们将解析函数与路径积分联系起来，揭示了复解析性的全局约束——"局部可导"蕴含了"边界决定内部"这样强有力的整体性质。在下一篇文章中，我们将利用这些工具研究具有孤立奇点的函数。
+            </p>
+
+          </div>
+        </article>
+        <nav class="article-nav" id="article-nav" data-article-id="complex-integration"></nav>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>

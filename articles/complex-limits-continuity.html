@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="将实分析中的极限概念推广到复平面，讨论复变函数极限的严格定义与本质区别">
+  <title>复变函数的极限与连续性 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>复变函数的极限与连续性</h1>
+          <div class="article-meta">
+            <time datetime="2026-05-11">2026年5月11日</time>
+            <span class="category-tag">复变函数</span>
+          </div>
+          <div class="article-body">
+
+            <h2>1. 复变函数的定义</h2>
+            <p>
+              一个<strong>复变函数</strong> $f$ 是从复平面的某个子集 $D \subset \mathbb{C}$ 到 $\mathbb{C}$ 的映射：$w = f(z)$。由于输入和输出都是二维量，复变函数本质上是从 $\mathbb{R}^2$ 到 $\mathbb{R}^2$ 的映射，但不能简单地将复变函数等同于两个二元实函数——复数域上的乘法结构赋予了它额外的代数约束。
+            </p>
+            <p>
+              我们可以将 $f(z) = u(x, y) + i v(x, y)$ 分解为实部和虚部，其中 $u, v: D \to \mathbb{R}$ 是二元实函数。例如 $f(z) = z^2$ 可以写为 $u(x, y) = x^2 - y^2$，$v(x, y) = 2xy$。
+            </p>
+            <p>
+              常见的复变函数包括：多项式函数 $z \mapsto z^n$、有理函数 $z \mapsto \frac{1}{z}$、指数函数 $z \mapsto e^z = e^x(\cos y + i\sin y)$。
+            </p>
+
+            <h2>2. 复变函数极限的 $\varepsilon$-$\delta$ 定义</h2>
+            <p>
+              复变函数的极限定义与实函数形式完全一致，但这里的"距离"是复平面上的模：
+            </p>
+            <blockquote>
+              <p>
+                $\displaystyle\lim_{z \to z_0} f(z) = L$ 当且仅当：$\forall \varepsilon > 0,\ \exists \delta > 0$，使得 $0 < |z - z_0| < \delta \implies |f(z) - L| < \varepsilon$。
+              </p>
+            </blockquote>
+            <p>
+              关键区别在于：在实函数中，$x \to x_0$ 只有从左和从右两种趋近方式；而在复平面中，$z \to z_0$ 可以从任意方向、沿任意路径趋近。因此，复极限存在的要求比实极限<strong>严格得多</strong>——极限必须沿所有可能的路径都相同。
+            </p>
+
+            <h2>3. 极限的代数性质</h2>
+            <p>
+              如果 $\lim_{z \to z_0} f(z) = A$ 且 $\lim_{z \to z_0} g(z) = B$，则：
+            </p>
+            <p>
+              $$\lim_{z \to z_0} [f(z) \pm g(z)] = A \pm B$$
+              $$\lim_{z \to z_0} f(z)g(z) = AB$$
+              $$\lim_{z \to z_0} \frac{f(z)}{g(z)} = \frac{A}{B} \quad (B \neq 0)$$
+            </p>
+            <p>
+              这些性质与实函数完全相同，证明也完全类似——只需将绝对值换成复数的模。
+            </p>
+
+            <h2>4. 连续性</h2>
+            <p>
+              $f$ 在 $z_0$ 处<strong>连续</strong>，如果 $\lim_{z \to z_0} f(z) = f(z_0)$。等价地，$f$ 在 $z_0$ 处连续当且仅当其实部和虚部 $u, v$ 都在 $(x_0, y_0)$ 处（作为二元实函数）连续。
+            </p>
+            <p>
+              多项式函数 $p(z) = a_0 + a_1 z + \cdots + a_n z^n$ 在整个复平面上连续。有理函数在其分母不为零的点处连续。
+            </p>
+
+            <h2>5. 一个揭示复极限严格性的经典反例</h2>
+            <p>
+              考虑函数 $f(z) = \frac{\overline{z}}{z}$（$z \neq 0$），问 $\lim_{z \to 0} f(z)$ 是否存在？
+            </p>
+            <p>
+              沿实轴趋近：$z = x$（$x \to 0$），则 $f(x) = \frac{x}{x} = 1$。
+            </p>
+            <p>
+              沿虚轴趋近：$z = iy$（$y \to 0$），则 $f(iy) = \frac{-iy}{iy} = -1$。
+            </p>
+            <p>
+              沿不同路径得到不同极限值，故极限不存在。这个例子展示了复极限的核心困难：<strong>只验证沿坐标轴方向的趋近是不够的</strong>——必须保证沿<em>所有</em>可能的路径极限都相同。这直接导致了后续讨论中"可导性"对复变函数施加的极其苛刻的约束。
+            </p>
+
+            <h2>6. 一致连续性与紧集上的性质</h2>
+            <p>
+              $f$ 在集合 $E$ 上<strong>一致连续</strong>，如果 $\forall \varepsilon > 0,\ \exists \delta > 0$，使得对任意 $z_1, z_2 \in E$，$|z_1 - z_2| < \delta \implies |f(z_1) - f(z_2)| < \varepsilon$。
+            </p>
+            <p>
+              与实分析类似，如果 $f$ 在紧集 $K$ 上连续，则 $f$ 在 $K$ 上一致连续，且 $f$ 在 $K$ 上取到最大值和最小值（就模而言）。这些性质构成了后续许多重要定理的技术基础。
+            </p>
+
+            <h2>7. 复变函数列与函数项级数</h2>
+            <p>
+              函数列 $\{f_n(z)\}$ 在集合 $E$ 上<strong>逐点收敛</strong>到 $f(z)$，如果对每个 $z \in E$ 有 $\lim_{n \to \infty} f_n(z) = f(z)$。逐点收敛并不保证极限函数保留原函数列的连续性。
+            </p>
+            <p>
+              函数列在 $E$ 上<strong>一致收敛</strong>到 $f(z)$，如果 $\forall \varepsilon > 0,\ \exists N$，使得 $n > N,\ z \in E \implies |f_n(z) - f(z)| < \varepsilon$。一致收敛保证：若每个 $f_n$ 连续，则极限函数 $f$ 也连续。
+            </p>
+            <p>
+              幂级数 $\sum_{n=0}^{\infty} a_n (z - z_0)^n$ 在其收敛圆盘内部是<strong>内闭一致收敛</strong>的，这为后续将解析函数展开为幂级数提供了分析基础。
+            </p>
+
+            <h2>小结</h2>
+            <p>
+              复变函数的极限与连续性在形式定义上与实函数完全平行，但复平面上"趋近方式"的多样性使得极限条件远为苛刻。正是这种苛刻性，赋予了解析函数（处处可导的复变函数）那些令人惊叹的性质——我们将在下一篇中深入探讨。
+            </p>
+
+          </div>
+        </article>
+        <nav class="article-nav" id="article-nav" data-article-id="complex-limits-continuity"></nav>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>

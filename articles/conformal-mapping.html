@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="探究复变函数作为共形映射的几何性质，重点讨论分式线性变换及其应用">
+  <title>共形映射与分式线性变换 — 数学笔记</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t) { document.documentElement.setAttribute('data-theme', t); return; }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">跳转到主内容</a>
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">数学笔记</a>
+      <button class="nav-toggle" aria-label="菜单">☰</button>
+      <nav class="site-nav">
+        <a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a>
+      </nav>
+      <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    </div>
+  </header>
+
+  <main id="main-content" class="article-page">
+    <div class="container">
+      <div class="article-content">
+        <article>
+          <h1>共形映射与分式线性变换</h1>
+          <div class="article-meta">
+            <time datetime="2026-05-12">2026年5月12日</time>
+            <span class="category-tag">复变函数</span>
+          </div>
+          <div class="article-body">
+
+            <h2>1. 解析函数作为映射的几何视角</h2>
+            <p>
+              到目前为止，我们主要从分析的角度研究复变函数（极限、导数、积分）。现在转换视角：将 $w = f(z)$ 看作是复平面 $z$ 到复平面 $w$ 的一个<strong>映射</strong>。曲线在 $f$ 下的像是什么？一个区域被 $f$ 映射成什么形状？这种几何视角不仅具有美学吸引力，也有极其重要的实际应用——例如在流体力学中将复杂流动区域映射到简单区域求解。
+            </p>
+
+            <h2>2. 共形映射的定义与保角性</h2>
+            <p>
+              设 $f$ 在 $z_0$ 处解析且 $f'(z_0) \neq 0$。那么 $f$ 在 $z_0$ 的某个邻域内是<strong>共形映射</strong>（conformal mapping），这意味着：
+            </p>
+            <p>
+              <strong>保角性：</strong>两条经过 $z_0$ 的光滑曲线在映射 $f$ 下的像曲线，其交角的大小和方向保持不变。更精确地说，如果两条曲线的切向量之间的角度为 $\theta$，则像曲线切向量之间的角度也是 $\theta$。
+            </p>
+            <p>
+              <strong>伸缩率一致性：</strong>经过 $z_0$ 的无穷小线段在映射下的长度伸缩因子是 $|f'(z_0)|$，与方向无关。这意味着无穷小的圆被映射为无穷小的圆（而非椭圆）。
+            </p>
+
+            <h2>3. 共形性的来源——复数乘法的几何</h2>
+            <p>
+              复变函数在一点处的导数 $f'(z_0)$（如果非零）本质上就是一个复数。而复数乘法——正如第一篇文章所讨论的——就是旋转 $(\arg f'(z_0))$ 加上伸缩 $(|f'(z_0)|)$。线性近似 $f(z) \approx f(z_0) + f'(z_0)(z - z_0)$ 表明，在局部尺度和旋转意义下，$f$ 的行为就是一个复数乘法——旋转角相同、伸缩率相同，与方向无关。这就是共形性的代数本质。
+            </p>
+            <p>
+              如果 $f'(z_0) = 0$，则线性近似中旋转信息丢失，共形性在 $z_0$ 处被破坏。例如 $f(z) = z^2$ 在 $z = 0$ 处将两条夹角为 $\theta$ 的射线映射到夹角为 $2\theta$ 的射线，不再保角。
+            </p>
+
+            <h2>4. 分式线性变换（Möbius 变换）</h2>
+            <p>
+              <strong>分式线性变换</strong>是具有以下形式的映射：
+            </p>
+            <p>$$w = T(z) = \frac{az + b}{cz + d}, \quad ad - bc \neq 0$$</p>
+            <p>
+              条件 $ad - bc \neq 0$ 保证了 $T$ 不是常数函数（否则分子是分母的常数倍）。分式线性变换在整个扩充复平面 $\hat{\mathbb{C}} = \mathbb{C} \cup \{\infty\}$——即黎曼球面——上定义了一个一一对应。
+            </p>
+            <p>
+              分式线性变换具有一个极其特殊的几何性质：<strong>它将圆（和直线，视为过无穷远点的圆）映射为圆（或直线）。</strong>这个性质在复平面上被称为"保圆性"。证明的要点在于将圆周和直线统一地表示为 $A|z|^2 + \overline{B}z + B\overline{z} + C = 0$（$A, C \in \mathbb{R}$）的形式，再验证分式线性变换保持此形式。
+            </p>
+
+            <h2>5. 分式线性变换的分解</h2>
+            <p>
+              任何分式线性变换都可以分解为三种基本变换的复合：
+            </p>
+            <p>
+              (1) <strong>平移</strong> $z \mapsto z + b$；<br>
+              (2) <strong>旋转与伸缩</strong> $z \mapsto kz$（$k > 0$ 为伸缩，若 $k$ 为复数则包含旋转）；<br>
+              (3) <strong>反演</strong> $z \mapsto \frac{1}{z}$（单位圆周的反演）。
+            </p>
+            <p>
+              这三种变换各自保圆（直线视为通过无穷远的圆），因此分式线性变换也保圆。理解这种分解对于分析 Möbius 变换的几何效果极有帮助。
+            </p>
+
+            <h2>6. 交比——分式线性变换的不变量</h2>
+            <p>
+              四个不同点 $z_1, z_2, z_3, z_4$ 的<strong>交比</strong>（cross ratio）定义为：
+            </p>
+            <p>$$(z_1, z_2; z_3, z_4) = \frac{(z_1 - z_3)(z_2 - z_4)}{(z_1 - z_4)(z_2 - z_3)}$$</p>
+            <p>
+              交比是分式线性变换下的<strong>完全不变量</strong>：$(T(z_1), T(z_2); T(z_3), T(z_4)) = (z_1, z_2; z_3, z_4)$ 对任何分式线性变换 $T$ 成立。
+            </p>
+            <p>
+              交比的实际应用是<strong>三点决定一个分式线性变换</strong>。给定三对不同的像和原像 $(z_1, w_1), (z_2, w_2), (z_3, w_3)$，存在唯一的分式线性变换 $T$ 使得 $T(z_k) = w_k$（$k = 1, 2, 3$）。这个 $T$ 由交比方程给出：$(w, w_1; w_2, w_3) = (z, z_1; z_2, z_3)$。
+            </p>
+
+            <h2>7. 区域映射——上半平面到单位圆盘</h2>
+            <p>
+              将上半平面 $\mathbb{H} = \{ z \mid \operatorname{Im}(z) > 0 \}$ 共形映射到单位圆盘 $\mathbb{D} = \{ w \mid |w| < 1 \}$ 是一个经典问题。标准的映射由分式线性变换实现：
+            </p>
+            <p>$$w = \frac{z - i}{z + i}$$</p>
+            <p>
+              验证：实轴 $\operatorname{Im}(z) = 0$ 被映射到单位圆周 $|w| = 1$（因为 $|x - i| = |x + i|$ 对所有实数 $x$ 成立）。上半平面中的点 $z = i$ 被映射到 $w = 0$（单位圆盘的中心）。这是一个从无界区域到有界区域的共形等价——在实分析中无法想象的事情。
+            </p>
+
+            <h2>8. 共形映射在物理中的应用概览</h2>
+            <p>
+              共形映射在二维物理问题中具有广泛应用，这源于一个基本事实：拉普拉斯方程 $\Delta \phi = 0$ 在共形映射下保持不变。具体来说，如果 $\phi$ 在 $D$ 上调和，$f: D \to D'$ 是共形映射（解析且 $f' \neq 0$），那么 $\phi \circ f^{-1}$ 在 $D'$ 上也调和。
+            </p>
+            <p>
+              这意味着：将复杂区域上的拉普拉斯方程（出现在静电学、热传导、理想流体等众多问题中）通过共形映射变换为简单区域（如半平面或圆盘）上的拉普拉斯方程，在简单区域上求解后再映射回去，就得到了原问题的解。这是复分析在工程和物理中最直接也最有力的应用之一。
+            </p>
+
+            <h2>小结</h2>
+            <p>
+              共形映射展示了复变函数论从分析学通往几何学的一面。从保角性和保圆性到具体的区域映射，复分析提供了一套强大的几何工具。分式线性变换作为最基础的共形映射家族，以其优雅的代数结构和丰富的几何性质，成为连接复分析、双曲几何、数论乃至理论物理的桥梁。
+            </p>
+
+          </div>
+        </article>
+        <nav class="article-nav" id="article-nav" data-article-id="conformal-mapping"></nav>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../js/main.js"></script>
+</body>
+</html>
