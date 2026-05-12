@@ -110,7 +110,9 @@
     scrollRevealCheck = check;
     window.addEventListener('scroll', check, { passive: true });
     check();
+    setTimeout(check, 300);
     setTimeout(check, 800);
+    setTimeout(check, 2000);
   }
 
   /* ========== Theme Manager ========== */
@@ -430,7 +432,7 @@
           if (grid && grid.children.length > 0) {
             obs.disconnect();
             renderMath();
-            initScrollReveal();
+            if (scrollRevealCheck) scrollRevealCheck();
           }
         });
         var grid = document.querySelector('#featured-grid');
