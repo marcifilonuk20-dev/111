@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="群论是研究对称性的语言，从具体例子出发介绍群的基本概念">
+  <meta name="description" content="系统介绍群论的基本概念：群的定义与例子、子群、正规子群、商群、同态基本定理与群作用">
   <title>群论基础：对称性的数学 — 数学笔记</title>
   <link rel="stylesheet" href="../css/style.css">
   <script>
@@ -19,95 +19,101 @@
 </head>
 <body>
   <a href="#main-content" class="skip-link">跳转到主内容</a>
-
   <header class="site-header">
     <div class="container">
       <a href="../" class="site-logo">数学笔记</a>
       <button class="nav-toggle" aria-label="菜单">☰</button>
-      <nav class="site-nav">
-        <a href="../">首页</a>
-        <a href="./">文章</a>
-        <a href="../about.html">关于</a>
-      </nav>
+      <nav class="site-nav"><a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a></nav>
       <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
     </div>
   </header>
-
   <main id="main-content" class="article-page">
     <div class="container">
       <div class="article-content">
         <article>
           <h1>群论基础：对称性的数学</h1>
-
           <div class="article-meta">
             <time datetime="2026-01-05">2026年1月5日</time>
             <span class="category-tag">抽象代数</span>
           </div>
-
           <div class="article-body">
-            <h2>什么是对称性？</h2>
+
+            <h2>1. 为什么研究对称性？</h2>
             <p>
-              一个正方形的对称性是什么？你可以将它旋转 $90^\circ$、$180^\circ$、$270^\circ$，
-              或者沿对角线翻转——这些操作后正方形看起来和原来一样。
-              群论正是研究这类对称性的数学语言。
+              一个正方形的对称性是什么？旋转 $90^\circ$、$180^\circ$、$270^\circ$，沿对角线翻转，沿对边中点连线翻转——做完这些操作之后，正方形看起来和原来一模一样。这些对称操作合在一起，有一个重要的特征：<strong>两个对称操作复合之后仍是</strong>对称操作。先旋转 $90^\circ$ 再沿对角线翻转，结果还是这 $8$ 种对称中的一种。
+            </p>
+            <p>
+              群论（group theory）就是研究这类"保持结构的变换的集合在复合下的代数性质"的数学理论。它发源于 Galois 对五次方程根式解不可能性的证明（1832年），如今已经渗透到数学的每一个角落以及理论物理、化学（分子对称性）、密码学等领域。
             </p>
 
-            <h2>群的定义</h2>
-            <p>
-              一个<strong>群</strong> $(G, \cdot)$ 是一个集合 $G$ 配上一个二元运算 $\cdot$，
-              满足以下四条公理：
-            </p>
-            <ol>
-              <li><strong>封闭性</strong>：对所有 $a, b \in G$，有 $a \cdot b \in G$。</li>
-              <li><strong>结合律</strong>：对所有 $a, b, c \in G$，有 $(a \cdot b) \cdot c = a \cdot (b \cdot c)$。</li>
-              <li><strong>单位元</strong>：存在 $e \in G$，使得对所有 $a \in G$，有 $e \cdot a = a \cdot e = a$。</li>
-              <li><strong>逆元</strong>：对每个 $a \in G$，存在 $a^{-1} \in G$，使得 $a \cdot a^{-1} = a^{-1} \cdot a = e$。</li>
-            </ol>
+            <h2>2. 群的公理化定义</h2>
+            <blockquote>
+              <p>一个<strong>群</strong>是一个集合 $G$ 配上一个二元运算 $\cdot: G \times G \to G$（称为乘法），满足：<br>
+              (G1) <strong>封闭性：</strong>$a, b \in G \implies a \cdot b \in G$<br>
+              (G2) <strong>结合律：</strong>$(a \cdot b) \cdot c = a \cdot (b \cdot c)$<br>
+              (G3) <strong>单位元：</strong>$\exists e \in G,\ \forall a \in G: e \cdot a = a \cdot e = a$<br>
+              (G4) <strong>逆元：</strong>$\forall a \in G,\ \exists a^{-1} \in G: a \cdot a^{-1} = a^{-1} \cdot a = e$</p>
+            </blockquote>
+            <p>如果还满足交换律 $a \cdot b = b \cdot a$，则称为<strong>交换群</strong>（或 Abel 群），以纪念挪威数学家 Niels Henrik Abel。</p>
+            <p>这个定义虽然简短，却极其有力——任何满足这四条公理的代数结构都可以应用群论的整套结论。从整数加群到矩阵群到置换群，表面迥异的对象共享着统一的群结构理论。</p>
 
-            <h2>经典例子</h2>
-            <p>
-              <strong>整数加群 $(\mathbb{Z}, +)$</strong>：单位元是 $0$，$n$ 的逆元是 $-n$。
-              这是最基础的无限群。
-            </p>
-            <p>
-              <strong>二面体群 $D_4$</strong>：正方形的所有对称操作构成一个 8 阶群。
-              其中 4 个旋转和 4 个反射。这个群不满足交换律——先旋转再翻转
-              和先翻转再旋转，结果通常不同。
-            </p>
-            <p>
-              <strong>置换群 $S_n$</strong>：$n$ 个元素的所有排列构成一个群，
-              运算为排列的复合。$S_n$ 的阶为 $n!$。
-            </p>
+            <h2>3. 经典群的例子</h2>
+            <p><strong>(1) 整数加群 $(\mathbb{Z}, +)$：</strong>单位元 $0$，$n$ 的逆元是 $-n$。这是最基础的无限 Abel 群。所有循环群的母体。</p>
+            <p><strong>(2) 循环群 $C_n$：</strong>模 $n$ 的同余类在加法下构成 $n$ 阶循环群 $\mathbb{Z}_n$。$C_n$ 可以看作正 $n$ 边形的旋转对称群。循环群是完全分类的——任意循环群同构于 $\mathbb{Z}$（无限阶）或 $\mathbb{Z}_n$（$n$ 阶）。</p>
+            <p><strong>(3) 置换群 $S_n$：</strong>$n$ 个元素的全部排列（置换）在复合下构成群，阶为 $n!$。任何一个有限群都同构于某个置换群的子群（Cayley 定理）——这意味着<strong>群论本质上就是对称群及其子群的研究</strong>。</p>
+            <p><strong>(4) 二面体群 $D_n$：</strong>正 $n$ 边形的所有对称（包括旋转和反射）构成阶为 $2n$ 的群。$D_n$ 不是 Abel 群（$n \geq 3$ 时），它是考察非交换性的入门例子。</p>
+            <p><strong>(5) 一般线性群 $GL_n(\mathbb{F})$：</strong>域 $\mathbb{F}$ 上所有可逆 $n \times n$ 矩阵在乘法下构成群。特殊线性群 $SL_n(\mathbb{F})$ 是行列式为 $1$ 的矩阵构成的子群。这些矩阵群是李群理论中研究最多的对象之一。</p>
 
-            <h2>子群与同态</h2>
-            <p>
-              群 $G$ 的一个子集 $H$ 如果自身也构成群（在相同的运算下），则称 $H$ 为 $G$ 的
-              <strong>子群</strong>。例如，偶置换的集合 $A_n$ 是 $S_n$ 的子群（交错群）。
-            </p>
-            <p>
-              两个群之间的<strong>同态</strong>是一个保持群结构的映射
-              $\varphi: G \to H$，满足 $\varphi(a \cdot b) = \varphi(a) \cdot \varphi(b)$。
-              如果 $\varphi$ 还是双射，则称为<strong>同构</strong>，记作 $G \cong H$。
-            </p>
-            <p>
-              同构的群在代数上是"相同"的——它们只是元素的名字不同而已。
-            </p>
+            <h2>4. 子群与陪集分解</h2>
+            <p>$G$ 的子集 $H$ 如果自身构成群（在相同的运算下），称为<strong>子群</strong>，记作 $H \leq G$。例如偶置换的集合 $A_n$ 是 $S_n$ 的子群（交错群，阶为 $n!/2$）。</p>
+            <p>给定子群 $H \leq G$ 和元素 $a \in G$，<strong>左陪集</strong> $aH = \{ah \mid h \in H\}$。关键事实：不同的左陪集之间不相交，且所有左陪集的大小都等于 $|H|$。由此立即得到<strong>拉格朗日定理</strong>：</p>
+            <p>$$|G| = |H| \cdot [G : H]$$</p>
+            <p>其中 $[G : H]$ 是 $H$ 的左陪集个数（<strong>指数</strong>）。推论：<strong>子群的阶整除群的阶。</strong>例如，$S_3$ 的阶为 $6$，它不可能有 $4$ 阶子群。再进一步，任意素数阶的群必定是循环群（且没有非平凡子群）。</p>
+
+            <h2>5. 正规子群与商群</h2>
+            <p>子群 $N \leq G$ 称为<strong>正规子群</strong>，记作 $N \trianglelefteq G$，如果对所有 $g \in G$ 有 $gNg^{-1} = N$。正规性保证了陪集之间的乘法是良定义的：</p>
+            <p>$$(aN)(bN) = (ab)N$$</p>
+            <p>这使得所有陪集的集合 $G/N$ 自身构成一个群，称为<strong>商群</strong>。商群的构造是群论中最核心的思想之一——它允许我们将群"mod out"一个正规子群，从而将复杂群分解为更简单的部分。</p>
+            <p>在 Abel 群中，<strong>每个子群都是正规的</strong>（因为 $gng^{-1} = n$），所以商群构造对交换群完全没有障碍。在非交换群中，正规子群是相对"稀有"的——例如 $A_n$ 是 $S_n$ 的正规子群（指数 $2$），而一般的子群则不是。</p>
+
+            <h2>6. 同态与同构——保持结构的映射</h2>
+            <p>映射 $\varphi: G \to H$ 是<strong>群同态</strong>，如果 $\varphi(ab) = \varphi(a)\varphi(b)$。同态保持群的运算结构：单位元映射到单位元，逆元映射到逆元。</p>
+            <p>同态的<strong>核</strong> $\ker\varphi = \{g \in G \mid \varphi(g) = e_H\}$ 是 $G$ 的正规子群。同态的<strong>像</strong> $\operatorname{im}\varphi = \{\varphi(g) \mid g \in G\}$ 是 $H$ 的子群。</p>
+            <p>下面是整个群论中最重要的定理之一：</p>
+            <blockquote>
+              <p><strong>第一同构定理（群同态基本定理）：</strong>如果 $\varphi: G \to H$ 是群同态，则 $G/\ker\varphi \cong \operatorname{im}\varphi$。</p>
+            </blockquote>
+            <p>这个定理的含义是：任何同态都可以分解为"投影到商群"再"单射嵌入"的复合。换句话说，<strong>群 $G$ 的所有同态像都已经"躲在" $G$ 的商群之中</strong>。这是范畴论中"universal property"思想的群论版本。</p>
+
+            <h2>7. 群作用——将群与集合联系起来</h2>
+            <p>群作为抽象代数结构的意义，在于它们通过<strong>群作用</strong>（group action）对具体的集合施加影响。群 $G$ 在集合 $X$ 上的作用是一个映射 $G \times X \to X$，满足 $e \cdot x = x$ 和 $g \cdot (h \cdot x) = (gh) \cdot x$。</p>
+            <p>每个群作用将 $X$ 划分为<strong>轨道</strong>（orbit）：$\operatorname{Orb}(x) = \{g \cdot x \mid g \in G\}$。轨道的大小等于子群的指数：$|\operatorname{Orb}(x)| = [G : \operatorname{Stab}(x)]$，其中 $\operatorname{Stab}(x) = \{g \in G \mid g \cdot x = x\}$ 是<strong>稳定子群</strong>。</p>
+            <p><strong>伯恩赛德引理</strong>（Burnside's Lemma / Cauchy–Frobenius Lemma）通过群作用计算不同轨道（在计数问题中也称"不等价的着色方案"）的数量：</p>
+            <p>$$\text{轨道数} = \frac{1}{|G|} \sum_{g \in G} |\operatorname{Fix}(g)|$$</p>
+            <p>其中 $\operatorname{Fix}(g)$ 是被 $g$ 固定的元素的个数。这个公式在组合数学中有着令人惊讶的广泛应用——从计算用 $k$ 种颜色给一条项链上色的不同方案数，到枚举化学同分异构体。</p>
+
+            <h2>8. Sylow 定理——有限群的结构理论</h2>
+            <p>拉格朗日定理说，子群的阶整除群的阶。反过来，给定群阶的一个因子，是否一定存在该阶的子群？一般答案是否定的（$A_4$ 阶为 $12$，没有 $6$ 阶子群）。但 Sylow 定理给出了素数幂阶子群存在性的有力保证：</p>
+            <p>设 $|G| = p^k \cdot m$（$p$ 为素数，且 $p \nmid m$）。则：<br>
+            (1) $G$ 存在 $p^k$ 阶子群（<strong>Sylow $p$-子群</strong>）；<br>
+            (2) 所有 Sylow $p$-子群彼此共轭；<br>
+            (3) Sylow $p$-子群的个数 $n_p$ 满足 $n_p \equiv 1 \pmod p$ 且 $n_p \mid m$。</p>
+            <p>Sylow 定理是有限群分类的最重要工具。例如，利用它很容易证明任何 $p^2$ 阶群（$p$ 为素数）必为 Abel 群，以及阶为 $15$ 的群必为循环群。</p>
+
+            <h2>9. Galois 理论——群论诞生的历史动机</h2>
+            <p>群论的历史起源并非抽象的对称性思考，而是一个非常具体的问题：<strong>五次及更高次多项式方程是否有求根公式？</strong>Évariste Galois（1811–1832）天才地将这个问题转化为群论问题：每个多项式 $f(x)$ 关联一个群（其根的置换中保持所有代数关系的那些置换构成的群——Galois 群），而 $f(x)$ 有根式解当且仅当其 Galois 群是<strong>可解群</strong>。由于五次以上一般方程的 Galois 群是 $S_n$（$n \geq 5$），而 $S_n$（$n \geq 5$）不可解，因此不存在一般的五次方程求根公式。</p>
+            <p>Galois 年仅 20 岁就在一场决斗中丧生，他的工作在去世后近 15 年才被 Liouville 和 Jordan 等人理解和发表。Galois 理论被公认为是现代代数学的开端。</p>
+
+            <h2>小结</h2>
+            <p>从正方形的对称到五次方程的可解性，从陪集计数到 Sylow 结构定理，群论体现了纯粹代数结构如何通过极少数的公理衍生出极其丰富的结论。掌握群论的基本概念，就掌握了通向环论、域论、模论、表示论乃至代数几何的第一把钥匙。</p>
+
           </div>
         </article>
-
-        <nav class="article-nav" id="article-nav" data-article-id="group-theory-basics">
-        </nav>
+        <nav class="article-nav" id="article-nav" data-article-id="group-theory-basics"></nav>
       </div>
     </div>
   </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 数学笔记</p>
-      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
-    </div>
-  </footer>
-
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script defer src="../js/main.js"></script>

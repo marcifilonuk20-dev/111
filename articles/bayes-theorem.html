@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="通过图形化和具体实例，深入理解贝叶斯定理">
+  <meta name="description" content="系统讲解贝叶斯定理的原理、直观理解、证明和在各领域的经典应用">
   <title>贝叶斯定理的直观理解 — 数学笔记</title>
   <link rel="stylesheet" href="../css/style.css">
   <script>
@@ -19,91 +19,117 @@
 </head>
 <body>
   <a href="#main-content" class="skip-link">跳转到主内容</a>
-
   <header class="site-header">
     <div class="container">
       <a href="../" class="site-logo">数学笔记</a>
       <button class="nav-toggle" aria-label="菜单">☰</button>
-      <nav class="site-nav">
-        <a href="../">首页</a>
-        <a href="./">文章</a>
-        <a href="../about.html">关于</a>
-      </nav>
+      <nav class="site-nav"><a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a></nav>
       <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
     </div>
   </header>
-
   <main id="main-content" class="article-page">
     <div class="container">
       <div class="article-content">
         <article>
           <h1>贝叶斯定理的直观理解</h1>
-
           <div class="article-meta">
             <time datetime="2026-04-10">2026年4月10日</time>
             <span class="category-tag">概率论</span>
           </div>
-
           <div class="article-body">
-            <h2>贝叶斯定理的公式</h2>
+
+            <h2>1. 条件概率——贝叶斯定理的起点</h2>
             <p>
-              贝叶斯定理是概率论中最优美的结论之一。它告诉我们如何在已知某些条件下，
-              更新我们对事件发生概率的信念：
-              $$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
+              在事件 $B$ 已经发生的条件下，事件 $A$ 发生的<strong>条件概率</strong>定义为：
+              $$P(A \mid B) = \frac{P(A \cap B)}{P(B)} \quad (P(B) > 0)$$
+              这个定义有一个重要的直观解释：$B$ 发生之后，样本空间从原来的 $\Omega$ 缩小为 $B$。$P(A \mid B)$ 就是在新的样本空间 $B$ 中，$A$ 所占的"比例"——即 $P(A \cap B)$ 与 $P(B)$ 的比值。
             </p>
             <p>
-              其中 $P(A \mid B)$ 是在事件 $B$ 发生的条件下事件 $A$ 发生的概率
-              （后验概率），$P(A)$ 是事件 $A$ 的先验概率，
-              $P(B \mid A)$ 是似然度，$P(B)$ 是边际概率。
+              条件概率不是简单的"同时除以某个数"——它是<strong>更新信念</strong>的数学形式。当我们获得新信息（$B$ 发生了），我们对事件 $A$ 发生可能性的评估就要从 $P(A)$ 更新为 $P(A \mid B)$。
             </p>
 
-            <h2>一个经典的医学检测例子</h2>
+            <h2>2. 贝叶斯定理的推导与公式</h2>
             <p>
-              假设某种疾病在人群中的发病率为 $0.1\%$，即 $P(D) = 0.001$。
-              有一种检测方法，对于真正患病的人有 $99\%$ 的概率检测出阳性（灵敏度），
-              对于不患病的人有 $2\%$ 的概率误报为阳性（假阳性率）。
+              由条件概率的定义直接得到 $P(A \cap B) = P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A)$。整理后即得<strong>贝叶斯定理</strong>：
+            </p>
+            <p>$$\boxed{P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}}$$</p>
+            <p>通常我们将分母 $P(B)$ 用<strong>全概率公式</strong>展开。如果 $\{A_i\}$ 是样本空间的一个划分，则：</p>
+            <p>$$P(B) = \sum_{i} P(B \mid A_i) \cdot P(A_i)$$</p>
+            <p>于是贝叶斯定理的更实用形式为：</p>
+            <p>$$P(A_k \mid B) = \frac{P(B \mid A_k) \cdot P(A_k)}{\sum_{i} P(B \mid A_i) \cdot P(A_i)}$$</p>
+            <p>各术语有标准名称：$P(A_k)$ 是<strong>先验概率</strong>（prior）——在看到证据前的信念；$P(B \mid A_k)$ 是<strong>似然度</strong>（likelihood）——在假设 $A_k$ 下观察到证据 $B$ 的概率；$P(A_k \mid B)$ 是<strong>后验概率</strong>（posterior）——看到证据后更新了的信念；分母 $P(B)$ 是<strong>边际似然</strong>（marginal likelihood）或称归一化常数。</p>
+
+            <h2>3. 医学检测示例——为什么"99%准确"远远不够</h2>
+            <p>这是理解贝叶斯定理最经典的例子。设某种疾病的患病率为 $0.1\%$（$P(D) = 0.001$）。检测灵敏度（真阳性率）为 $99\%$（$P(+ \mid D) = 0.99$），误报率（假阳性率）为 $2\%$（$P(+ \mid \neg D) = 0.02$）。问题：检测阳性后，真正患病的概率是多少？</p>
+            <p>贝叶斯计算：</p>
+            <p>$$P(+) = P(+ \mid D)P(D) + P(+ \mid \neg D)P(\neg D) = 0.99 \times 0.001 + 0.02 \times 0.999 \approx 0.0210$$</p>
+            <p>$$P(D \mid +) = \frac{0.99 \times 0.001}{0.0210} \approx 0.047 = 4.7\%$$</p>
+            <p>检测阳性！但真正患病的概率只有不到 $5\%$。直觉上的错误（很多人猜 $99\%$）来源于<strong>忽略了基础率</strong>（base rate neglect）——疾病本身极其罕见，所以尽管检测看起来"很准确"，阳性结果中大部分仍是误报。贝叶斯定理迫使我们将先验概率和检测的假阳性率同时纳入考量。</p>
+            <p>这个例子并非智力游戏——它在真实医学诊断中有着严肃的实践意义，也是概率论对决策理论最直接的贡献之一。</p>
+
+            <h2>4. 贝叶斯定理的直观理解——"逆概率"思维</h2>
+            <p>
+              贝叶斯定理本质上回答了<strong>逆概率问题</strong>。如果我们知道原因到结果的概率 $P(\text{结果} \mid \text{原因})$，如何<strong>反过来</strong>从观察到的结果推断原因的概率 $P(\text{原因} \mid \text{结果})$？
             </p>
             <p>
-              问题是：<strong>如果一个人的检测结果为阳性，他真正患病的概率是多少？</strong>
-            </p>
-            <p>
-              直觉上很多人会猜 $99\%$，但实际计算却大不相同：
-              $$P(D \mid +) = \frac{P(+ \mid D) \cdot P(D)}{P(+)}$$
-              $$P(+) = P(+ \mid D)P(D) + P(+ \mid \neg D)P(\neg D)$$
-              $$= 0.99 \times 0.001 + 0.02 \times 0.999 = 0.02097$$
-              $$P(D \mid +) = \frac{0.99 \times 0.001}{0.02097} \approx 0.047 \approx 4.7\%$$
-            </p>
-            <p>
-              检测阳性后真正患病的概率竟然不到 $5\%$！这是因为疾病本身非常罕见，
-              而假阳性率相对来说并不算低，导致阳性结果中大部分是误报。
+              在贝叶斯之前，概率论主要研究"前向"问题（已知骰子的面，预测掷出某结果的概率）。贝叶斯（Thomas Bayes，1701–1761）在其遗作中首次系统地处理了"反向"问题——从观测数据推断产生这些数据的未知参数或原因。这一思想在后世发展为整个贝叶斯统计学派。
             </p>
 
-            <h2>先验与后验</h2>
+            <h2>5. 贝叶斯更新——连续学习的数学框架</h2>
             <p>
-              这个例子完美展示了贝叶斯定理的核心哲学：<strong>先验信念 + 新证据 → 更新后的信念</strong>。
-              我们的先验信念 $P(D) = 0.1\%$ 在观察到阳性检测结果后，
-              更新为后验概率 $P(D \mid +) \approx 4.7\%$。概率确实大幅上升了（约 47 倍），
-              但离确诊还很远。
+              贝叶斯定理不仅用于单次推断。当新的证据不断到来时，我们可以反复应用贝叶斯定理来持续更新信念。今天的后验概率成为明天的先验概率：
+            </p>
+            <p>$$P(\theta \mid D_1, D_2) \propto P(D_2 \mid \theta, D_1) \cdot P(\theta \mid D_1) \propto P(D_2 \mid \theta) \cdot P(D_1 \mid \theta) \cdot P(\theta)$$</p>
+            <p>
+              这个过程的哲学含义是深远的：<strong>贝叶斯定理为归纳推理提供了数学基础。</strong>我们从初始假设（先验）出发，依据积累的证据逐步修正信念——这正是科学方法的一种理想化模型。
+            </p>
+
+            <h2>6. 垃圾邮件过滤——贝叶斯定理的经典工程应用</h2>
+            <p>
+              朴素贝叶斯分类器是贝叶斯定理在机器学习中的经典应用。在垃圾邮件过滤中，令 $S$ 表示"邮件为垃圾邮件"，$w_1, w_2, \dots, w_n$ 为邮件中出现的词语。由贝叶斯定理：
+            </p>
+            <p>$$P(S \mid w_1, \dots, w_n) = \frac{P(w_1, \dots, w_n \mid S) \cdot P(S)}{P(w_1, \dots, w_n)}$$</p>
+            <p>
+              "朴素"假设（条件独立性假设）认为各词语出现与否在给定 $S$ 的条件下相互独立：$P(w_1, \dots, w_n \mid S) \approx \prod_i P(w_i \mid S)$。尽管这一假设在现实中并不成立（词语之间显然不独立），但朴素贝叶斯在实践中表现异常出色——这是一个有趣的数学现象：<strong>即使假设存在系统性偏差，分类决策边界仍然可以有效</strong>。
+            </p>
+
+            <h2>7. 贝叶斯定理与蒙提霍尔问题</h2>
+            <p>
+              蒙提霍尔（Monty Hall）问题是贝叶斯更新的又一个经典演示。三扇门，一扇后有汽车，两扇后有山羊。你选了一扇后，主持人（知道汽车在哪）打开另一扇有山羊的门，问你是否要换选择。
+            </p>
+            <p>用贝叶斯定理分析：设 $C_i$ 为"汽车在门 $i$ 后"，先验 $P(C_i) = 1/3$。假设你选了门 $1$，主持人打开了门 $3$（露出山羊）。那么：</p>
+            <p>$$P(C_1 \mid \text{开3}) = \frac{P(\text{开3} \mid C_1)P(C_1)}{\sum_{i=1}^3 P(\text{开3} \mid C_i)P(C_i)}$$</p>
+            <p>若汽车在门 $1$，主持人可以开 $2$ 或 $3$，故 $P(\text{开3} \mid C_1) = 1/2$。若汽车在门 $2$，主持人只能开 $3$，故 $P(\text{开3} \mid C_2) = 1$。若汽车在门 $3$，主持人不能开 $3$，故 $P(\text{开3} \mid C_3) = 0$。代入得 $P(C_1 \mid \text{开3}) = 1/3$，而 $P(C_2 \mid \text{开3}) = 2/3$——<strong>换门后中奖概率翻倍</strong>。</p>
+
+            <h2>8. 贝叶斯因子与模型比较</h2>
+            <p>
+              在比较两个假说 $H_0$ 和 $H_1$ 时，先验概率比乘以似然比得到后验概率比：
+            </p>
+            <p>$$\frac{P(H_1 \mid D)}{P(H_0 \mid D)} = \underbrace{\frac{P(D \mid H_1)}{P(D \mid H_0)}}_{\text{贝叶斯因子 BF}_{10}} \cdot \frac{P(H_1)}{P(H_0)}$$</p>
+            <p>
+              <strong>贝叶斯因子</strong> $BF_{10}$ 衡量了数据对两个假说的相对支持程度。例如，$BF_{10} = 10$ 意味着在观察到数据后，$H_1$ 相对 $H_0$ 的可信度提高了 $10$ 倍。贝叶斯因子在现代科学推断中（尤其是在心理学和医学研究中）作为 $p$ 值的一种替代或补充而受到越来越多的重视。
+            </p>
+
+            <h2>9. 贝叶斯统计 vs 频率统计——两种概率哲学</h2>
+            <p>
+              贝叶斯定理映射了概率论中两种根本不同的世界观。频率学派将概率理解为长期频率（大数定律下的极限），参数是固定但未知的常数。贝叶斯学派将概率理解为<strong>信念的程度</strong>（degree of belief），参数本身就有概率分布，而观察数据则通过贝叶斯定理更新这一分布。
             </p>
             <p>
-              贝叶斯推断的这种思维方式在机器学习、统计决策、医学诊断等领域有着广泛的应用。
+              两种方法各有优势：频率方法在客观性和重复性实验中有不可替代的地位；贝叶斯方法则在整合先验信息、处理小样本和表示不确定性方面具有自然的优势。现代统计学实践中，两者的界限越来越模糊——许多方法在合适的先验下等价，而计算工具（如MCMC）的进步使得贝叶斯方法得以应用于前所未有的复杂模型。
             </p>
+
+            <h2>小结</h2>
+            <p>
+              贝叶斯定理从一条简单的条件概率等式出发，为归纳推理、科学哲学、机器学习和统计决策提供了统一的框架。它的核心信息——"用证据更新信念"——超越了数学本身，成为一种普适的理性思考模式。
+            </p>
+
           </div>
         </article>
-
-        <nav class="article-nav" id="article-nav" data-article-id="bayes-theorem">
-        </nav>
+        <nav class="article-nav" id="article-nav" data-article-id="bayes-theorem"></nav>
       </div>
     </div>
   </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 数学笔记</p>
-      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
-    </div>
-  </footer>
-
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script defer src="../js/main.js"></script>

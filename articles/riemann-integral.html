@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="从分割与黎曼和出发，严格定义定积分">
+  <meta name="description" content="系统讲解黎曼积分的构造、可积性条件、基本性质和微积分基本定理">
   <title>黎曼积分的定义与性质 — 数学笔记</title>
   <link rel="stylesheet" href="../css/style.css">
   <script>
@@ -19,94 +19,110 @@
 </head>
 <body>
   <a href="#main-content" class="skip-link">跳转到主内容</a>
-
   <header class="site-header">
     <div class="container">
       <a href="../" class="site-logo">数学笔记</a>
       <button class="nav-toggle" aria-label="菜单">☰</button>
-      <nav class="site-nav">
-        <a href="../">首页</a>
-        <a href="./">文章</a>
-        <a href="../about.html">关于</a>
-      </nav>
+      <nav class="site-nav"><a href="../">首页</a><a href="./">文章</a><a href="../about.html">关于</a></nav>
       <button class="theme-toggle" aria-label="切换深色模式">🌙</button>
     </div>
   </header>
-
   <main id="main-content" class="article-page">
     <div class="container">
       <div class="article-content">
         <article>
           <h1>黎曼积分的定义与性质</h1>
-
           <div class="article-meta">
             <time datetime="2025-12-10">2025年12月10日</time>
             <span class="category-tag">数学分析</span>
           </div>
-
           <div class="article-body">
-            <h2>从面积问题出发</h2>
+
+            <h2>1. 从面积到积分——动机与历史</h2>
             <p>
-              定积分的核心问题是：如何严格定义曲线下方的面积？牛顿和莱布尼茨
-              用微积分基本定理给出了漂亮的计算方法，但黎曼提供了更基础的构造。
+              求曲线下方面积的问题可以追溯到阿基米德时代——他用穷竭法计算了抛物线弓形的面积。但直到 17 世纪，牛顿和莱布尼茨才通过<strong>微积分基本定理</strong>将面积计算与求导数的逆运算联系起来。然而，这种联系依赖于直观的几何理解。黎曼在 19 世纪提出的积分定义为"曲线下方面积"提供了一个<strong>纯粹的、不依赖于直觉的严格构造</strong>。
             </p>
 
-            <h2>分割与黎曼和</h2>
+            <h2>2. 区间分割与黎曼和</h2>
             <p>
-              给定区间 $[a, b]$，一个<strong>分割</strong> $P$ 是一组分点：
-              $$P: a = x_0 < x_1 < x_2 < \cdots < x_n = b$$
-              分割的<strong>细度</strong>（mesh）定义为最大子区间长度：
-              $$\|P\| = \max_{1 \leq i \leq n} (x_i - x_{i-1})$$
+              设 $f$ 是定义在闭区间 $[a, b]$ 上的有界函数。一个<strong>分割</strong>（partition）$P$ 是 $[a, b]$ 上的一组有序分点：
+            </p>
+            <p>$$P: a = x_0 < x_1 < x_2 < \cdots < x_n = b$$</p>
+            <p>分割的<strong>细度</strong>（mesh）定义为最大子区间长度：$\|P\| = \max_{1 \leq i \leq n} (x_i - x_{i-1})$。在每个子区间 $[x_{i-1}, x_i]$ 中任选一个<strong>标记点</strong> $\xi_i \in [x_{i-1}, x_i]$，构造<strong>黎曼和</strong>：</p>
+            <p>$$S(P, f, \{\xi_i\}) = \sum_{i=1}^{n} f(\xi_i)(x_i - x_{i-1})$$</p>
+            <p>几何上，黎曼和是用 $n$ 个矩形的面积之和来近似曲线下的面积——每个矩形的宽度为 $\Delta x_i = x_i - x_{i-1}$，高度为 $f(\xi_i)$（标记点处的函数值）。</p>
+
+            <h2>3. 黎曼积分的严格定义</h2>
+            <blockquote>
+              <p>如果存在一个数 $I$，使得对任意 $\varepsilon > 0$，存在 $\delta > 0$，当 $\|P\| < \delta$ 时，<strong>无论标记点 $\{\xi_i\}$ 如何选取</strong>，都有 $|S(P, f, \{\xi_i\}) - I| < \varepsilon$，则称 $f$ 在 $[a, b]$ 上<strong>黎曼可积</strong>，并称 $I$ 为 $f$ 在 $[a, b]$ 上的<strong>黎曼积分</strong>：
+              $$\int_a^b f(x)\,dx = I$$</p>
+            </blockquote>
+            <p>注意这个定义的严谨性：它不仅要求分割足够细（$\|P\| < \delta$），还要求极限对标记点的任意选取都一致——无论在每个小矩形中取哪个点的高度，黎曼和都必须收敛到同一个数 $I$。这个"对标记点任意选取的一致性"要求是黎曼积分定义中容易被忽略但极其关键的部分。</p>
+
+            <h2>4. 达布和——可积性的等价刻画</h2>
+            <p>
+              为了建立可积性的判别准则，引入<strong>达布和</strong>（Darboux sums）。令 $M_i = \sup_{x \in [x_{i-1}, x_i]} f(x)$ 和 $m_i = \inf_{x \in [x_{i-1}, x_i]} f(x)$（这两个值因为 $f$ 有界而存在且有限）。定义：
+            </p>
+            <p>$$U(P, f) = \sum_{i=1}^{n} M_i \Delta x_i \quad \text{（上达布和）}$$</p>
+            <p>$$L(P, f) = \sum_{i=1}^{n} m_i \Delta x_i \quad \text{（下达布和）}$$</p>
+            <p>显然 $L(P, f) \leq S(P, f, \{\xi_i\}) \leq U(P, f)$ 对所有标记点成立。进一步定义：</p>
+            <p>$$\overline{\int_a^b} f = \inf_P U(P, f) \quad \text{（上积分）}$$
+            $$\underline{\int_a^b} f = \sup_P L(P, f) \quad \text{（下积分）}$$</p>
+            <p><strong>黎曼可积的充要条件（达布定理）：</strong>$f$ 在 $[a, b]$ 上黎曼可积当且仅当上积分等于下积分，即对任意 $\varepsilon > 0$，存在分割 $P$ 使得 $U(P, f) - L(P, f) < \varepsilon$。此时积分值等于上积分（也等于下积分）。</p>
+
+            <h2>5. 哪些函数黎曼可积？</h2>
+            <p>利用达布和判别准则，可以确定以下几类函数的可积性：</p>
+            <p>(1) <strong>$[a, b]$ 上的连续函数必黎曼可积。</strong>因为闭区间上的连续函数一致连续，可以控制相邻子区间上的振幅。</p>
+            <p>(2) <strong>$[a, b]$ 上的单调（有界）函数必黎曼可积。</strong>每步跳跃的总和不超过 $f(b) - f(a)$，可以通过足够细的分割使振动总和任意小。</p>
+            <p>(3) <strong>具有有限多个间断点的有界函数可积。</strong>将包含间断点的子区间取得足够窄，使它们的总贡献小于 $\varepsilon/2$，其余连续部分用一致连续性控制。</p>
+            <p>(4) 更一般地，有界函数 $f$ 在 $[a, b]$ 上黎曼可积当且仅当它在 $[a, b]$ 上的间断点集是<strong>零测集</strong>（Lebesgue 准则）。例如 Dirichlet 函数——有理数取 $1$，无理数取 $0$——的间断点集是整个 $[0, 1]$（不是零测集），因此不可积。</p>
+
+            <h2>6. 积分的基本性质</h2>
+            <p>黎曼积分具有以下基本性质，它们都可以通过达布和或 ε-δ 直接从定义证明：</p>
+            <p><strong>线性性：</strong>$$\int_a^b [\alpha f(x) + \beta g(x)]\,dx = \alpha\int_a^b f(x)\,dx + \beta\int_a^b g(x)\,dx$$</p>
+            <p><strong>区间可加性：</strong>$$\int_a^c f(x)\,dx = \int_a^b f(x)\,dx + \int_b^c f(x)\,dx$$</p>
+            <p><strong>保序性：</strong>若 $f(x) \leq g(x)$ 对所有 $x \in [a, b]$ 成立，则 $\int_a^b f \leq \int_a^b g$。</p>
+            <p><strong>绝对值的积分不等式：</strong>$\left|\int_a^b f(x)\,dx\right| \leq \int_a^b |f(x)|\,dx$。注意：$|f|$ 可积不一定推出 $f$ 可积（$f$ 在 $[0, 1]$ 上有理数取 $1$，无理数取 $-1$，$f$ 不可积但 $|f| \equiv 1$ 可积），但当 $f$ 可积时 $|f|$ 可积且上述不等式成立。</p>
+
+            <h2>7. 积分中值定理</h2>
+            <p>如果 $f$ 在 $[a, b]$ 上连续，则存在 $\xi \in [a, b]$ 使得：</p>
+            <p>$$\int_a^b f(x)\,dx = f(\xi)(b - a)$$</p>
+            <p>几何上，这意味着存在某个"平均高度" $f(\xi)$，使得以 $b - a$ 为底、$f(\xi)$ 为高的矩形面积恰好等于曲线下的面积。推广到带权重的版本：如果 $f$ 连续且 $g$ 在 $[a, b]$ 上可积且不变号，则存在 $\xi \in [a, b]$ 使得 $\int_a^b f(x)g(x)\,dx = f(\xi)\int_a^b g(x)\,dx$。</p>
+
+            <h2>8. 微积分基本定理——微分与积分的统一</h2>
+            <p>这是整个微积分理论中最核心的结论，它将"求面积"与"求导数的逆"这两个看似无关的操作统一起来。</p>
+            <blockquote>
+              <p><strong>第一基本定理：</strong>如果 $f$ 在 $[a, b]$ 上可积，定义 $F(x) = \int_a^x f(t)\,dt$（$x \in [a, b]$）。则 $F$ 在 $[a, b]$ 上连续。若 $f$ 在 $x_0 \in [a, b]$ 处连续，则 $F$ 在 $x_0$ 处可导且 $F'(x_0) = f(x_0)$。</p>
+            </blockquote>
+            <blockquote>
+              <p><strong>第二基本定理（牛顿–莱布尼茨公式）：</strong>如果 $f$ 在 $[a, b]$ 上可积，且存在 $F$ 使得 $F' = f$ 在 $[a, b]$ 上处处成立，则 $\int_a^b f(x)\,dx = F(b) - F(a)$。</p>
+            </blockquote>
+            <p>第一基本定理的核心洞见：<strong>变上限积分函数 $F(x)$ 的导数就是被积函数 $f(x)$。</strong>这意味着"积分"和"微分"互为逆运算——这一事实的证明全部依赖于 ε-δ 语言和积分中值定理的精细运用。第二基本定理则将定积分的计算归约为寻找原函数——这是我们在标准微积分课程中最为熟悉的计算定积分的方法。</p>
+
+            <h2>9. 黎曼积分的局限性——为什么需要勒贝格积分</h2>
+            <p>
+              黎曼积分尽管构造优美，但存在多处本质性缺陷。首先，<strong>黎曼可积函数空间不完备</strong>：存在黎曼可积函数列 $\{f_n\}$ 逐点收敛到 $f$，但 $f$ 不可积（或积分与极限不可交换）。其次，许多在分析中自然出现的函数（如 Dirichlet 函数的各种变体）并不可积。第三，即使可积，极限与积分的交换需要一致收敛这样苛刻的条件。
             </p>
             <p>
-              在每个子区间 $[x_{i-1}, x_i]$ 中任选一点 $\xi_i$，
-              构造<strong>黎曼和</strong>：
-              $$S(P, f) = \sum_{i=1}^{n} f(\xi_i)(x_i - x_{i-1})$$
+              勒贝格（Henri Lebesgue）在 1902 年提出的积分理论通过将分割定义域替换为分割值域，彻底解决了这些问题。勒贝格积分下的可积函数空间是完备的，且控制了函数的积分与极限的交换条件大为削弱（由 Lebesgue 控制收敛定理保证）。黎曼积分是勒贝格积分的特殊情况：任何黎曼可积函数都是勒贝格可积的，且两个积分值相等。
             </p>
 
-            <h2>黎曼积分的定义</h2>
-            <p>
-              如果存在一个数 $I$，使得对于任意 $\varepsilon > 0$，
-              存在 $\delta > 0$，当 $\|P\| < \delta$ 时，无论 $\xi_i$ 如何选取，
-              都有 $|S(P, f) - I| < \varepsilon$，则称 $f$ 在 $[a, b]$ 上
-              <strong>黎曼可积</strong>，并记
-              $$\int_a^b f(x)\,dx = I$$
-            </p>
+            <h2>10. 反常积分——突破紧区间的限制</h2>
+            <p>黎曼积分定义在有限闭区间 $[a, b]$ 上的有界函数。当积分区间无界或被积函数无界时，需要通过极限过程定义<strong>反常积分</strong>：</p>
+            <p>$$\int_a^\infty f(x)\,dx = \lim_{b \to \infty} \int_a^b f(x)\,dx$$</p>
+            <p>当极限存在（有限）时，称反常积分<strong>收敛</strong>。例如 $\int_1^\infty \frac{1}{x^p}\,dx$ 当 $p > 1$ 时收敛（值为 $\frac{1}{p-1}$），当 $p \leq 1$ 时发散。</p>
+            <p>反常积分的收敛性判别（比较判别法、极限比较判别法、Dirichlet 判别法、Abel 判别法）构成了积分学的最后一个重要技术模块，在概率论（如正态分布的归一化常数）、数论（如 Gamma 函数和 Zeta 函数的定义）和数学物理中有着根本性的应用。</p>
 
-            <h2>可积性条件</h2>
-            <p>
-              一个重要的结论是：<strong>闭区间上的连续函数一定黎曼可积</strong>。
-              更一般地，闭区间上有界且几乎处处连续（间断点集为零测集）的函数
-              是黎曼可积的。例如，$[0, 1]$ 上的 Dirichlet 函数（有理数取 1，
-              无理数取 0）就不可积。
-            </p>
+            <h2>小结</h2>
+            <p>黎曼积分以极其简洁的构造（分割 + 矩形近似）实现了"曲线下方面积"的严格定义。通过达布和，我们将可积性问题转化为上下积分的比较；通过微积分基本定理，我们将积分与导数联系起来；通过对可积函数的深入研究，我们揭示了黎曼积分的边界并为勒贝格积分的产生提供了动机。从黎曼和到积分，这一构造完美体现了分析学的基本精神：<strong>用简单的离散结构逼近复杂的连续对象，并在极限中提取精确的信息。</strong></p>
 
-            <h2>积分的基本性质</h2>
-            <p>
-              黎曼积分满足许多我们期望的性质：线性性
-              $\int (af + bg) = a\int f + b\int g$、
-              区间可加性 $\int_a^c f = \int_a^b f + \int_b^c f$、
-              以及保序性（若 $f \leq g$ 则 $\int f \leq \int g$）。
-            </p>
-            <p>
-              这些性质的严格证明都依赖于 ε-δ 语言，展示了分析学的力量。
-            </p>
           </div>
         </article>
-
-        <nav class="article-nav" id="article-nav" data-article-id="riemann-integral">
-        </nav>
+        <nav class="article-nav" id="article-nav" data-article-id="riemann-integral"></nav>
       </div>
     </div>
   </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 数学笔记</p>
-      <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">返回顶部 ↑</a>
-    </div>
-  </footer>
-
+  <footer class="site-footer"><div class="container"><p>&copy; 2026 数学笔记</p></div></footer>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script defer src="../js/main.js"></script>
